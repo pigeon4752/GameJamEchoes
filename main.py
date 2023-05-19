@@ -44,6 +44,7 @@ class main:
 
         screen.fill((255, 255, 255))
         player1.updatePosition()
+        background.updatePosition()
         
 
         entityHandler.updateEntities()
