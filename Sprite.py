@@ -14,7 +14,7 @@ class Sprite:
         self.velocity = pygame.Vector2(0,0)
         self.playerRectangle = pygame.Rect(self.position.x,self.position.y,width,size)
         self.colour = colour
-        self.isGrounded()
+        self.grounded = self.isGrounded()
 
     def updatePosition(self):
         self.position.x += self.velocity.x
@@ -29,10 +29,11 @@ class Sprite:
         self.velocity.y += increment
     
     def isGrounded(self):
-        return(self.background.checkGrounded(self.playerRectangle))
+        return(self.background.isGrounded(self.playerRectangle))
     
     def update(self):
         self.updatePosition()
+        self.grounded = isGrounded()
 
     def draw(self):
         pygame.draw.rect(self.screen,self.colour,self.playerRectangle)
