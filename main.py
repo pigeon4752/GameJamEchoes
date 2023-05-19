@@ -29,20 +29,13 @@ class main:
 
         screen.fill((255, 255, 255))
         background.updatePosition()
-        
-
         entityHandler.updateEntities()
-
-
-        # Draw a solid blue circle in the center
-
-
 
 
         # Flip the display
 
         pygame.display.flip()
-        dt = clock.tick(60)
+        dt = clock.tick(30)
 
 
 # Done! Time to quit.

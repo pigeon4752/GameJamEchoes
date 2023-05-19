@@ -5,8 +5,9 @@ class Player(Sprite):
     gravity = 1
 
     def update(self):
-        self.changeYVelocity(-self.gravity)
-        super()
+        self.changeYVelocity(self.gravity)
+        # self.updatePosition()
+        super().update()
 
     def __init__(self,screen,background,moveSpeed):
         super().__init__(screen,background)
