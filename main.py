@@ -1,8 +1,14 @@
 import pygame
+import Player as player
+import Background as Background
 class main:
     pygame.init()
     screen = pygame.display.set_mode([500, 500])
+    background = Background.Background(screen)
+    
+    
     running = True
+    player1 = player.Player(screen, background)
     while running:
         for event in pygame.event.get():
 
@@ -11,6 +17,8 @@ class main:
                 running = False
 
         screen.fill((255, 255, 255))
+        player1.updatePosition()
+        
 
 
          # Draw a solid blue circle in the center

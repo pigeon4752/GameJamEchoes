@@ -1,5 +1,6 @@
 import pygame
-import Sprite as Sprite
+from Sprite import Sprite
 class Player(Sprite):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,screen,background,width=10,size= 10,colour="red"):
+        super().__init__(screen,background,width,size,colour)
+    

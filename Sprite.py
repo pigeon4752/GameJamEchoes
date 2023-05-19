@@ -1,15 +1,21 @@
 import pygame
+import Background as background
 class Sprite:
-    position = pygame.Vector2(0,0)
-    velocity = pygame.Vector2(0,0)
+    
     
 
-    def __init__(self,screen):
+    def __init__(self,screen,background,width=10,size= 10,colour="red"):
+        self.background = background
         self.screen = screen
+        self.position = pygame.Vector2(0,0)
+        self.velocity = pygame.Vector2(0,0)
+        self.playerRectangle = pygame.Rect(self.position.x,self.position.y,width,size)
+
 
     def updatePosition(self):
-        position.x += velocity.x
-        position.y += velocity.y
+        self.position.x += self.velocity.x
+        self.position.y += self.velocity.y
+        self.playerRectangle.move(self.position.x,self.position.y)
     
     def incrementXVelocity(self,increment):
         self.velocity.x += increment
@@ -18,7 +24,8 @@ class Sprite:
         self.velocity.y += increment
     
     def isGrounded():
-        pass
+        return(self.background.checkGrounded(this))
+        
 
 
         
