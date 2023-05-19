@@ -15,5 +15,9 @@ class Background:
     def updatePosition(self):
         for rect in self.rectArray:
             pygame.draw.rect(self.screen,rect[0],rect[1])
+
+    def isGrounded(self):
+        for rect in self.rectArray:
+            print(rect[0].bottom)
             
 

@@ -10,6 +10,7 @@ class Sprite:
     def __init__(self,screen,background,width=10,size= 10,colour="red"):
         self.background = background
         self.screen = screen
+        self.isGrounded()
         self.position = pygame.Vector2(0,0)
         self.velocity = pygame.Vector2(0,0)
         self.playerRectangle = pygame.Rect(self.position.x,self.position.y,width,size)

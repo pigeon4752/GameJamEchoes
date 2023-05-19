@@ -1,4 +1,6 @@
 import pygame
+from mouseHandler import MouseHandler
+import Background as Background
 from Player import Player
 from keyHandler import KeyHandler
 from EntityHandler import EntityHandler
@@ -6,7 +8,10 @@ from Background import Background
 
 class main:
 
-   
+    player1 = Player()
+    keyHandler = KeyHandler(player1)
+    entityHandler = EntityHandler()
+    entityHandler.add(player1)
 
     pygame.init()
     screen = pygame.display.set_mode([500, 500])
