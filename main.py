@@ -4,7 +4,7 @@ import Background as Background
 from Player import player
 from keyHandler import KeyHandler
 from EntityHandler import EntityHandler
-
+from Background import Background
 
 class main:
 
@@ -15,35 +15,24 @@ class main:
 
     pygame.init()
     screen = pygame.display.set_mode([500, 500])
-    mouseHandler = MouseHandler()
-
-    background = Background.Background(screen)
-    
-    
-
+    background = Background(screen)
     clock = pygame.time.Clock()
+    player1 = Player(screen,background,5)
+    keyHandler = KeyHandler(player1)
+    entityHandler = EntityHandler()
+    entityHandler.addEntity(player1)
 
     running = True
-    player1 = player.Player(screen, background)
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                mouseHandler.increment_counter()
-            
-            elif event.type == pygame.MOUSEBUTTONUP:
-                mouse_coords = pygame.mouse.get_pos()
-                print(mouseHandler.mouse_angle(mouse_coords, (250, 250)))
-                
 
         # Get state of all keys
         keys = pygame.key.get_pressed()
         keyHandler.handleKeys(keys)
 
         screen.fill((255, 255, 255))
-        player1.updatePosition()
         background.updatePosition()
         
 
