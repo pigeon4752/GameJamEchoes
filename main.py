@@ -1,14 +1,14 @@
 import pygame
 from mouseHandler import MouseHandler
 import Background as Background
-from player import Player
+from Player import player
 from keyHandler import KeyHandler
 from EntityHandler import EntityHandler
 
 
 class main:
 
-    player1 = Player()
+    player1 = Player.player()
     keyHandler = KeyHandler(player1)
     entityHandler = EntityHandler()
     entityHandler.add(player1)
