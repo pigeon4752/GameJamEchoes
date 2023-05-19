@@ -1,6 +1,6 @@
 import pygame
-from entity import Entity
-class Player(Entity):
+from Sprite import Sprite
+class Player(Sprite):
     moveSpeed = 5
 
     def __init__(self,moveSpeed):
