@@ -15,6 +15,7 @@ class Sprite:
     def updatePosition(self):
         self.position.x += self.velocity.x
         self.position.y += self.velocity.y
+
         self.playerRectangle.move(self.position.x,self.position.y)
     
     def incrementXVelocity(self,increment):
