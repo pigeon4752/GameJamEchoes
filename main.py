@@ -1,12 +1,11 @@
 import pygame
-
-
+from player import Player
+from keyHandler import KeyHandler
 
 class main:
 
-    def handleKeys(keys):
-        if keys[pygame.K_a]:
-            print("'A' key is being pressed")
+    player1 = Player()
+    keyHandler = KeyHandler(player1)
 
 
     pygame.init()
@@ -20,8 +19,8 @@ class main:
 
         # Get state of all keys
         keys = pygame.key.get_pressed()
-        handleKeys(keys)
-        
+        keyHandler.handleKeys(keys)
+
         screen.fill((255, 255, 255))
 
 

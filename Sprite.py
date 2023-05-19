@@ -8,8 +8,8 @@ class Sprite:
         self.screen = screen
 
     def updatePosition(self):
-        position.x += velocity.x
-        position.y += velocity.y
+        self.position.x += self.velocity.x
+        self.position.y += self.velocity.y
     
     def incrementXVelocity(self,increment):
         self.velocity.x += increment
