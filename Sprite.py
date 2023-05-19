@@ -13,13 +13,13 @@ class Sprite:
         self.position = pygame.Vector2(0,0)
         self.velocity = pygame.Vector2(0,0)
         self.playerRectangle = pygame.Rect(self.position.x,self.position.y,width,size)
-
+        self.colour = colour
 
     def updatePosition(self):
         self.position.x += self.velocity.x
         self.position.y += self.velocity.y
 
-        self.playerRectangle.move(self.position.x,self.position.y)
+        # self.playerRectangle.move(self.position.x,self.position.y)
     
     def changeXVelocity(self,increment):
         self.velocity.x += increment
@@ -34,6 +34,7 @@ class Sprite:
         self.updatePosition()
 
     def draw(self):
+        pygame.draw.rect(self.screen,self.colour,self.playerRectangle)
         pass
         
 

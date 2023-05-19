@@ -36,7 +36,6 @@ class main:
 
         # Draw a solid blue circle in the center
 
-        pygame.draw.circle(screen, (0, 0, 255), (250, 250), 75)
 
 
 
