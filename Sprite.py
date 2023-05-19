@@ -56,6 +56,8 @@ class Sprite:
         else:
             self.position.y+=yVel
 
+        self.background.handlePlayerCollision(self,self.position.x-xVel,self.position.y-yVel)
+
     
     def changeXVelocity(self,increment):
             if self.velocity.x+increment>self.MAX_X_VELOCITY:
