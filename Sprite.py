@@ -5,9 +5,10 @@ class Sprite:
 
     position = pygame.Vector2(0,0)
     velocity = pygame.Vector2(0,0)
+    MAX_VELOCITY = 30
     
 
-    def __init__(self,screen,background,width=10,size= 10,colour="red"):
+    def __init__(self,screen,background,width=25,size= 25,colour="red"):
         self.background = background
         self.screen = screen
         self.position = pygame.Vector2(0,0)
@@ -17,16 +18,35 @@ class Sprite:
         self.isGrounded()
 
     def updatePosition(self):
-        self.position.x += self.velocity.x
-        self.position.y += self.velocity.y
+        if (0 > (self.position.x + self.velocity.x)):
+            self.position.x = 0
+            self.velocity.x = 0
+        elif (self.position.x+self.playerRectangle.width + self.velocity.x) > 1000:
+            self.position.x=1000-self.playerRectangle.width
+            self.velocity.x=0         
+        else:
+            self.position.x+=self.velocity.x
+        if (0 > (self.position.y + self.velocity.y)):
+            self.position.y=0
+            self.velocity.y=0
+        elif (self.position.y+self.playerRectangle.height + self.velocity.y)>600:     
+            self.position.y=600-self.playerRectangle.height
+            self.velocity.y=0
+        else:
+            self.position.y+=self.velocity.y
 
-        # self.playerRectangle.move(self.position.x,self.position.y)
     
     def changeXVelocity(self,increment):
-        self.velocity.x += increment
+            if self.velocity.x+increment>self.MAX_VELOCITY:
+                self.velocity.x=self.MAX_VELOCITY
+            else:
+                self.velocity.x += increment
 
     def changeYVelocity(self,increment):
-        self.velocity.y += increment
+            if self.velocity.y+increment>self.MAX_VELOCITY:
+                self.velocity.y=self.MAX_VELOCITY
+            else:
+                self.velocity.y += increment
     
     def isGrounded(self):
         return(self.background.checkGrounded(self.playerRectangle))
