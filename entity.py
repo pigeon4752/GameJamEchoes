@@ -1,5 +1,5 @@
 import pygame
-class Sprite:
+class Entity:
     position = pygame.Vector2(0,0)
     velocity = pygame.Vector2(0,0)
     
@@ -11,10 +11,10 @@ class Sprite:
         self.position.x += self.velocity.x
         self.position.y += self.velocity.y
     
-    def incrementXVelocity(self,increment):
+    def changeXVelocity(self,increment):
         self.velocity.x += increment
 
-    def incrementYVelocity(self,increment):
+    def changeYVelocity(self,increment):
         self.velocity.y += increment
     
     def isGrounded():

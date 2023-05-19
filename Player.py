@@ -1,8 +1,8 @@
 import pygame
-import Sprite as Sprite
-class Player(Sprite):
+from entity import Entity
+class Player(Entity):
     moveSpeed = 5
 
     def __init__(self,moveSpeed):
         super().__init__()
-        self.moveSpeed
+        self.moveSpeed = moveSpeed
