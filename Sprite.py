@@ -1,7 +1,5 @@
 import pygame
 import Background as background
-from projectiles import Projectile
-from gun import Gun
 
 class Sprite:
 
@@ -9,7 +7,6 @@ class Sprite:
     velocity = pygame.Vector2(0,0)
     MAX_Y_VELOCITY = 30
     MAX_X_VELOCITY = 10
-    projectiles = []
     
 
     def __init__(self,screen,background,width=25,size= 25,colour="red"):
@@ -20,13 +17,47 @@ class Sprite:
         self.playerRectangle = pygame.Rect(self.position.x,self.position.y,width,size)
         self.colour = colour
         self.isGrounded()
-        self.gun = Gun(self.playerRectangle)
 
-    def updatePosition(self):
-        self.position.x += self.velocity.x
-        self.position.y += self.velocity.y
+    def updatePosition(self,dt):
+        xVel = self.velocity.x*dt
+        yVel = self.velocity.y*dt
+        if self.velocity.x>0:
+            self.velocity.x = self.velocity.x-0.5
+            if self.velocity.x < 0:
+                self.velocity.x=0
+        else:
+            self.velocity.x = self.velocity.x+0.5
+            if self.velocity.x > 0:
+                self.velocity.x=0
+        
+        if self.velocity.y>0:
+            self.velocity.y = self.velocity.y-0.01
+            if self.velocity.y < 0.001:
+                self.velocity.y=0
+        else:
+            self.velocity.y = self.velocity.y+0.01
+            if self.velocity.y > -0.001:
+                self.velocity.y=0
 
-        # self.playerRectangle.move(self.position.x,self.position.y)
+        if (0 > (self.position.x + xVel)):
+            self.position.x = 0
+            self.velocity.x = 0
+        elif (self.position.x+self.playerRectangle.width + xVel) > 1000:
+            self.position.x=1000-self.playerRectangle.width
+            self.velocity.x=0         
+        else:
+            self.position.x+=xVel
+        if (0 > (self.position.y + yVel)):
+            self.position.y=0
+            self.velocity.y=0
+        elif (self.position.y+self.playerRectangle.height + yVel)>600:     
+            self.position.y=600-self.playerRectangle.height
+            self.velocity.y=0
+        else:
+            self.position.y+=yVel
+
+        self.background.handlePlayerCollision(self,self.position.x-xVel,self.position.y-yVel)
+
     
     def changeXVelocity(self,increment):
             if self.velocity.x+increment>self.MAX_X_VELOCITY:
@@ -49,14 +80,10 @@ class Sprite:
 
     def draw(self):
         pygame.draw.rect(self.screen,self.colour,self.playerRectangle)
-        # draw all users projectiles
-        for projectile in self.projectiles:
-            pass
         pass
-    
-    def fire(self, angle):
-        self.gun.fire_gun(angle)
-        pass
+        
+
+
         
 
         
