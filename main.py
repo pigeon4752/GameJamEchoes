@@ -19,23 +19,25 @@ class main:
 
     running = True
     while running:
+        dt = clock.tick(60)
+        dt = dt/50
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
         # Get state of all keys
         keys = pygame.key.get_pressed()
-        keyHandler.handleKeys(keys)
+        keyHandler.handleKeys(keys,dt)
 
         screen.fill((255, 255, 255))
         background.updatePosition()
-        entityHandler.updateEntities()
+        entityHandler.updateEntities(dt)
 
 
         # Flip the display
 
         pygame.display.flip()
-        dt = clock.tick(60)
+        
 
 
 # Done! Time to quit.
