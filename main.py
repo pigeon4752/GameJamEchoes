@@ -1,6 +1,8 @@
 import pygame
+import Background as Background
 from player import Player
 from keyHandler import KeyHandler
+
 
 class main:
 
@@ -10,8 +12,15 @@ class main:
 
     pygame.init()
     screen = pygame.display.set_mode([500, 500])
+
+    background = Background.Background(screen)
+    
+    
+
     clock = pygame.time.Clock()
+
     running = True
+    player1 = player.Player(screen, background)
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -22,6 +31,8 @@ class main:
         keyHandler.handleKeys(keys)
 
         screen.fill((255, 255, 255))
+        player1.updatePosition()
+        
 
 
          # Draw a solid blue circle in the center

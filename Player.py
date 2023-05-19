@@ -1,5 +1,5 @@
 import pygame
-import Sprite as Sprite
+from Sprite import Sprite
 class Player(Sprite):
     moveSpeed = 5
 
