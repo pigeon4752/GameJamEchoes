@@ -9,13 +9,15 @@ from Background import Background
 class main:
 
     pygame.init()
-    screen = pygame.display.set_mode([1000, 600])
+    screen = pygame.display.set_mode([800, 800])
     background = Background(screen)
     clock = pygame.time.Clock()
     player1 = Player(screen,background,5)
     keyHandler = KeyHandler(player1)
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
+    bg = pygame.image.load("background.PNG")
+    
 
     running = True
     while running:
@@ -28,10 +30,11 @@ class main:
         # Get state of all keys
         keys = pygame.key.get_pressed()
         keyHandler.handleKeys(keys,dt)
-
-        screen.fill((255, 255, 255))
-        background.updatePosition()
         entityHandler.updateEntities(dt)
+        screen.fill((255, 255, 255))
+        screen.blit(bg, (0, 0))
+        background.updatePosition()
+        
 
 
         # Flip the display

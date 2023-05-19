@@ -11,33 +11,49 @@ class Background:
         
     
     def createNewBackground(self):
-        rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
+        #rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
         
         #img = Image.open('file.bmp')
-        img = np.array(Image.open('map.bmp'))
-        print(img)
+        self.map = np.array(Image.open('map.bmp'))
+        cobble = pygame.image.load("cobble.png")
+        print(self.map)
+        tileSize = self.screen.get_height()/32
+        for y in range(int (self.map.size/32)):
+            for x in range(int (self.map.size/32)):
+                tileValue = self.map[y][x]
+                tileRect = pygame.Rect(x * tileSize, y * tileSize, tileSize, tileSize)
+                if tileValue == 0:
+                    pygame.draw.rect(self.screen, (0, 0, 0), tileRect)
+                    self.screen.blit(cobble, tileRect.topleft)
+                    self.rectArray.append((cobble,tileRect))
+                #elif tile_value == 1:
+                    #self.rectArray.append(("white",tile_rect))
+                    #pygame.draw.rect(self.screen, (255, 0, 0), tile_rect)
         
-        self.rectArray.append(("blue",rectangle))
+        
        
     
     def updatePosition(self):
-        #for y in range(map_height):
-            #for x in range(map_width):
-                #tile_value = map_data[y][x]
-                #tile_rect = pygame.Rect(x * tile_width, y * tile_height, tile_width, tile_height)
+        
+        
+            
+                #
+                #
 
-                #if tile_value == 0:
-                #    pygame.draw.rect(screen, (0, 0, 0), tile_rect)  # Draw an empty tile
+                #  # Draw an empty tile
                 #elif tile_value == 1:
                 #    pygame.draw.rect(screen, (255, 0, 0), tile_rect)  # Draw a wall tile
 
         for rect in self.rectArray:
-            pygame.draw.rect(self.screen,rect[0],rect[1])
+            pygame.draw.rect(self.screen,"black",rect[1])
+            self.screen.blit(rect[0], rect[1].topleft)
+            
        
 
     def isGrounded(self):
         for rect in self.rectArray:
             print(rect[0].bottom)
+            
 
     def checkGrounded(self, rectangle):
         pass
