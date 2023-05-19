@@ -9,7 +9,7 @@ from Background import Background
 class main:
 
     pygame.init()
-    screen = pygame.display.set_mode([500, 500])
+    screen = pygame.display.set_mode([1000, 600])
     background = Background(screen)
     clock = pygame.time.Clock()
     player1 = Player(screen,background,5)
@@ -35,7 +35,7 @@ class main:
         # Flip the display
 
         pygame.display.flip()
-        dt = clock.tick(30)
+        dt = clock.tick(60)
 
 
 # Done! Time to quit.
