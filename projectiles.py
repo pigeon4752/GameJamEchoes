@@ -6,5 +6,5 @@ class Projectile():
         self.y = y
         self.angle = angle
         self.speed = 10
-        self.projectileRectangle = pygame.Rect.Rect()
+        self.projectileRectangle = pygame.Rect(x, y, 3, 6)
     

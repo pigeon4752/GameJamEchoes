@@ -10,9 +10,8 @@ class Gun:
         self.gunRect = pygame.Rect(0, 0, Gun.width, Gun.height)
         
 
-    def fire_gun(self, angle):
+    def fire_gun(self, angle, click_duration):
         projectile = Projectile(self.gunRect.x, self.gunRect.y, angle=angle)
-        projectile.travel
         print("pewpew")
         pass
 

@@ -12,6 +12,10 @@ class MouseHandler():
     def mouse_angle(self, mouse_player, player_cords):
         angle = math.atan2((mouse_player[1]-player_cords[1]), mouse_player[0]-player_cords[0])  # Calculate the angle in radians
         angle_degrees = math.degrees(angle)  # Convert the angle to degrees
-
         return angle_degrees
+    
+    def click_duration(self):
+        duration = self.mouse_duration_count
+        self.mouse_duration_count = 0
+        return duration
 
