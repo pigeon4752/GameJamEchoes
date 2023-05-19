@@ -1,24 +1,59 @@
 import pygame
+import numpy as np
+from PIL import Image
 class Background:
     
     def __init__(self,screen):
         self.screen = screen
         self.rectArray = []
+        self.polyArray = []
         self.createNewBackground()
         
     
     def createNewBackground(self):
-        rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
+        #rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
         
-        self.rectArray.append(("blue",rectangle))
+        #img = Image.open('file.bmp')
+        self.map = np.array(Image.open('map.bmp'))
+        cobble = pygame.image.load("cobble.png")
+        print(self.map)
+        tileSize = self.screen.get_height()/32
+        for y in range(int (self.map.size/32)):
+            for x in range(int (self.map.size/32)):
+                tileValue = self.map[y][x]
+                tileRect = pygame.Rect(x * tileSize, y * tileSize, tileSize, tileSize)
+                if tileValue == 0:
+                    pygame.draw.rect(self.screen, (0, 0, 0), tileRect)
+                    self.screen.blit(cobble, tileRect.topleft)
+                    self.rectArray.append((cobble,tileRect))
+                #elif tile_value == 1:
+                    #self.rectArray.append(("white",tile_rect))
+                    #pygame.draw.rect(self.screen, (255, 0, 0), tile_rect)
+        
+        
+       
     
     def updatePosition(self):
+        
+        
+            
+                #
+                #
+
+                #  # Draw an empty tile
+                #elif tile_value == 1:
+                #    pygame.draw.rect(screen, (255, 0, 0), tile_rect)  # Draw a wall tile
+
         for rect in self.rectArray:
-            pygame.draw.rect(self.screen,rect[0],rect[1])
+            pygame.draw.rect(self.screen,"black",rect[1])
+            self.screen.blit(rect[0], rect[1].topleft)
+            
+       
 
     def isGrounded(self):
         for rect in self.rectArray:
             print(rect[0].bottom)
+            
 
     def checkGrounded(self, rectangle):
         pass
