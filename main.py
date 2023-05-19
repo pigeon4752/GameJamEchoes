@@ -13,6 +13,7 @@ class main:
     background = Background(screen)
     clock = pygame.time.Clock()
     player1 = Player(screen,background,5)
+
     keyHandler = KeyHandler(player1)
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
@@ -22,6 +23,13 @@ class main:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                MouseHandler.increment_counter
+
+            elif event.type == pygame.MOUSEBUTTONUP:
+                angle = MouseHandler.mouse_angle
+                player1.fire(angle)
 
         # Get state of all keys
         keys = pygame.key.get_pressed()

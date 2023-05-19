@@ -1,10 +1,13 @@
 import pygame
 import Background as background
+from projectiles import Projectile
+from gun import Gun
 
 class Sprite:
 
     position = pygame.Vector2(0,0)
     velocity = pygame.Vector2(0,0)
+    projectiles = []
     
 
     def __init__(self,screen,background,width=10,size= 10,colour="red"):
@@ -15,6 +18,7 @@ class Sprite:
         self.playerRectangle = pygame.Rect(self.position.x,self.position.y,width,size)
         self.colour = colour
         self.isGrounded()
+        self.gun = Gun(self.playerRectangle)
 
     def updatePosition(self):
         self.position.x += self.velocity.x
@@ -37,10 +41,14 @@ class Sprite:
 
     def draw(self):
         pygame.draw.rect(self.screen,self.colour,self.playerRectangle)
+        # draw all users projectiles
+        for projectile in self.projectiles:
+            pass
         pass
-        
-
-
+    
+    def fire(self, angle):
+        self.gun.fire_gun(angle)
+        pass
         
 
         
