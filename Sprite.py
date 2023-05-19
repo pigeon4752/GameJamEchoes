@@ -2,7 +2,7 @@ import pygame
 import Background as background
 
 class Sprite:
-    
+
     position = pygame.Vector2(0,0)
     velocity = pygame.Vector2(0,0)
     
@@ -27,8 +27,14 @@ class Sprite:
     def changeYVelocity(self,increment):
         self.velocity.y += increment
     
-    def isGrounded():
-        return(self.background.checkGrounded(this))
+    def isGrounded(self):
+        return(self.background.checkGrounded(self))
+    
+    def update(self):
+        self.updatePosition()
+
+    def draw(self):
+        pass
         
 
 
