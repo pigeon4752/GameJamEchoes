@@ -28,6 +28,8 @@ class main:
         keyHandler.handleKeys(keys)
 
         screen.fill((255, 255, 255))
+        background.updatePosition()
+        
 
         entityHandler.updateEntities()
 
