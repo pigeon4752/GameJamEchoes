@@ -1,20 +1,10 @@
 import pygame 
 
-class Projectile:
-    def __init__(self, x, y, angle=180):
+class Projectile():
+    def __init__(self, x, y, angle):
         self.x = x
         self.y = y
         self.angle = angle
-        self.speed = 3
-        self.projectileRectangle = pygame.Rect(x, y, 3, 6)
-
-    def update(self):
-        pass
-    
-    def travel(self):
-        pass
-    
-
-
-        
+        self.speed = 10
+        self.projectileRectangle = pygame.Rect.Rect()
     
