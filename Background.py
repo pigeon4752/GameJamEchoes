@@ -9,11 +9,11 @@ class Background:
         
     
     def createNewBackground(self):
-        rectCount = 10
+        rectCount = 0
         colourDict = {0:"blue",1:"red",2:"green"}
-        bottomWidth = 10
+        bottomWidth = 50
         rectangle = pygame.Rect(0, self.screen.get_height() - bottomWidth, self.screen.get_width(), bottomWidth)
-        
+        self.rectArray.append((colourDict[Random.randint(0,2)],rectangle))
         while (rectCount>0):
             ledgeLeft = 0
             
@@ -32,9 +32,12 @@ class Background:
 
     def isGrounded(self,rectangle):
         for rect in self.rectArray:
-            if rectangle.bottom <= rect[1].top and rectangle.left>rect[1].left and rectangle.right<rect[1].right:#
-                print("Pi")
-                return(true)
+            
+            print(rectangle.bottom)
+            print(rect[1].top)
+            if rectangle.colliderect(rect[1]) and rectangle.bottom >= rect[1].bottom: #and (rect[1].left<rectangle.centrex<=rect[1].right):#
+               
+                return True
 
 
     
