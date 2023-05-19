@@ -19,5 +19,8 @@ class Background:
     def isGrounded(self):
         for rect in self.rectArray:
             print(rect[0].bottom)
+
+    def checkGrounded(self, rectangle):
+        pass
             
 

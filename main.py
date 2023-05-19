@@ -8,11 +8,6 @@ from Background import Background
 
 class main:
 
-    player1 = Player()
-    keyHandler = KeyHandler(player1)
-    entityHandler = EntityHandler()
-    entityHandler.add(player1)
-
     pygame.init()
     screen = pygame.display.set_mode([500, 500])
     background = Background(screen)
