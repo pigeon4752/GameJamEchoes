@@ -5,4 +5,4 @@ class Player(Sprite):
 
     def __init__(self,moveSpeed):
         super().__init__()
-        self.moveSpeed
+        self.moveSpeed = moveSpeed
