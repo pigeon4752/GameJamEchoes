@@ -1,9 +1,19 @@
 import pygame
 class Background:
-    rectArray  = []
+    
     def __init__(self,screen):
         self.screen = screen
+        self.rectArray = []
         self.createNewBackground()
+        
     
     def createNewBackground(self):
-        pygame.draw.line(self.screen,"blue",pygame.Vector2(0,self.screen.get_height()) ,pygame.Vector2(self.screen.get_width(), self.screen.get_height()),100)
+        rectangle = pygame.Rect(0, self.screen.get_height() - 100, self.screen.get_width(), 100)
+        
+        self.rectArray.append(("blue",rectangle))
+    
+    def updatePosition(self):
+        for rect in self.rectArray:
+            pygame.draw.rect(self.screen,rect[0],rect[1])
+            
+
