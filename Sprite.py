@@ -1,5 +1,6 @@
 import pygame
 import Background as background
+from gun import Gun
 
 class Sprite:
 
@@ -17,6 +18,7 @@ class Sprite:
         self.playerRectangle = pygame.Rect(self.position.x,self.position.y,width,size)
         self.colour = colour
         self.isGrounded()
+        self.gun = Gun(self.playerRectangle)
 
     def updatePosition(self,dt):
         xVel = self.velocity.x*dt
@@ -81,7 +83,10 @@ class Sprite:
     def draw(self):
         pygame.draw.rect(self.screen,self.colour,self.playerRectangle)
         pass
-        
+    
+    def fire(self, angle, click_duration):
+        self.gun.fire_gun(angle, click_duration)
+        print("click")
 
 
         
