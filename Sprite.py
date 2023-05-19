@@ -7,10 +7,12 @@ class Sprite:
 
     position = pygame.Vector2(0,0)
     velocity = pygame.Vector2(0,0)
+    MAX_Y_VELOCITY = 30
+    MAX_X_VELOCITY = 10
     projectiles = []
     
 
-    def __init__(self,screen,background,width=10,size= 10,colour="red"):
+    def __init__(self,screen,background,width=25,size= 25,colour="red"):
         self.background = background
         self.screen = screen
         self.position = pygame.Vector2(0,0)
@@ -27,16 +29,22 @@ class Sprite:
         # self.playerRectangle.move(self.position.x,self.position.y)
     
     def changeXVelocity(self,increment):
-        self.velocity.x += increment
+            if self.velocity.x+increment>self.MAX_X_VELOCITY:
+                self.velocity.x=self.MAX_X_VELOCITY
+            else:
+                self.velocity.x += increment
 
     def changeYVelocity(self,increment):
-        self.velocity.y += increment
+            if self.velocity.y+increment>self.MAX_Y_VELOCITY:
+                self.velocity.y=self.MAX_Y_VELOCITY
+            else:
+                self.velocity.y += increment
     
     def isGrounded(self):
         return(self.background.checkGrounded(self.playerRectangle))
     
-    def update(self):
-        self.updatePosition()
+    def update(self,dt):
+        self.updatePosition(dt)
         self.playerRectangle.topleft = (self.position.x,self.position.y)
 
     def draw(self):

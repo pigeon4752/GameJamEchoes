@@ -9,7 +9,7 @@ from Background import Background
 class main:
 
     pygame.init()
-    screen = pygame.display.set_mode([500, 500])
+    screen = pygame.display.set_mode([1000, 600])
     background = Background(screen)
     clock = pygame.time.Clock()
     player1 = Player(screen,background,5)
@@ -20,6 +20,8 @@ class main:
 
     running = True
     while running:
+        dt = clock.tick(60)
+        dt = dt/50
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -33,17 +35,17 @@ class main:
 
         # Get state of all keys
         keys = pygame.key.get_pressed()
-        keyHandler.handleKeys(keys)
+        keyHandler.handleKeys(keys,dt)
 
         screen.fill((255, 255, 255))
         background.updatePosition()
-        entityHandler.updateEntities()
+        entityHandler.updateEntities(dt)
 
 
         # Flip the display
 
         pygame.display.flip()
-        dt = clock.tick(30)
+        
 
 
 # Done! Time to quit.

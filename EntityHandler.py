@@ -7,8 +7,8 @@ class EntityHandler:
         self.entityArray.append(entity)
         pass
 
-    def updateEntities(self):
+    def updateEntities(self,dt):
         for entity in self.entityArray:
-            entity.update()
+            entity.update(dt)
             entity.draw()
         pass
