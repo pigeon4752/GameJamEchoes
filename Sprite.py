@@ -33,6 +33,7 @@ class Sprite:
     
     def update(self):
         self.updatePosition()
+        self.playerRectangle.topleft = (self.position.x,self.position.y)
 
     def draw(self):
         pygame.draw.rect(self.screen,self.colour,self.playerRectangle)
