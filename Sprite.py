@@ -90,8 +90,6 @@ class Sprite:
     
     def fire(self, angle, click_duration):
         self.gun.fire_gun(angle, click_duration)
-        print(click_duration)
-        print("click")
 
 
         

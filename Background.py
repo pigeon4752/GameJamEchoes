@@ -16,7 +16,6 @@ class Background:
         #img = Image.open('file.bmp')
         self.map = np.array(Image.open('map.bmp'))
         cobble = pygame.image.load("cobble.png")
-        print(self.map)
         tileSize = self.screen.get_height()/32
         for y in range(int (self.map.size/32)):
             for x in range(int (self.map.size/32)):
