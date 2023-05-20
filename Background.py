@@ -1,53 +1,85 @@
 import pygame
 import numpy as np
+from Tile import tile
 from PIL import Image
+import math
+
 class Background:
     
-    def __init__(self,screen):
+    def __init__(self,screen,SCREEN_WIDTH,SCREEN_HEIGHT):
         self.screen = screen
-        self.rectArray = []
+        self.tileArray = []
         self.polyArray = []
+        self.fogSurfaces = []
+        self.screenHeight = SCREEN_HEIGHT
+        self.screenWidth = SCREEN_WIDTH
+        self.hashMap = {}
+        #fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
+        #fogSurface.fill((0, 0, 0, 100))
+        
+        
+        #self.fogSurfaces.append(fogSurface)
         self.createNewBackground()
         
     
+
+    
+   
+        
+        
+    
+
+
     def createNewBackground(self):
         #rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
         
         #img = Image.open('file.bmp')
         self.map = np.array(Image.open('map.bmp'))
+        dimension = int(math.sqrt(self.map.size))
         cobble = pygame.image.load("cobble.png")
-        print(self.map)
-        tileSize = self.screen.get_height()/32
-        for y in range(int (self.map.size/32)):
-            for x in range(int (self.map.size/32)):
-                tileValue = self.map[y][x]
-                tileRect = pygame.Rect(x * tileSize, y * tileSize, tileSize, tileSize)
+        fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
+
+        tileSize = self.screen.get_height()/dimension
+        for x in range(int (self.map.size/dimension)):
+            for y in range(int (self.map.size/dimension)):
+                tileValue = self.map[x][y]
+                
                 if tileValue == 0:
-                    pygame.draw.rect(self.screen, (0, 0, 0), tileRect)
-                    self.screen.blit(cobble, tileRect.topleft)
-                    self.rectArray.append((cobble,tileRect))
-                #elif tile_value == 1:
-                    #self.rectArray.append(("white",tile_rect))
-                    #pygame.draw.rect(self.screen, (255, 0, 0), tile_rect)
+                    tileRect = pygame.Rect(x * tileSize, y * tileSize, tileSize, tileSize)
+                    tileObject = tile(cobble,tileRect,255,x,y)
+                    #pygame.draw.rect(self.screen, (0, 0, 0), tileRect)
+                    #self.screen.blit(cobble, tileRect.topleft)
+                    self.tileArray.append(tileObject)
+                    self.hashMap[tileObject.key] = tileObject
+                    
         
         
        
     
-    def updatePosition(self):
-        
-        
+    def updateMap(self):
+        fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
+        for tileObject in self.tileArray: 
+            #pygame.draw.rect(self.screen,"black",rect[1])
             
-                #
-                #
+            if (tileObject.shadow!=255):
+                self.screen.blit(tileObject.image, tileObject.rect.topleft)
+                fogSurface.fill((0, 0, 0, tileObject.shadow))
+                self.screen.blit(fogSurface,(tileObject.rect.topleft),tileObject.rect)
 
-                #  # Draw an empty tile
-                #elif tile_value == 1:
-                #    pygame.draw.rect(screen, (255, 0, 0), tile_rect)  # Draw a wall tile
-
-        for rect in self.rectArray:
-            pygame.draw.rect(self.screen,"black",rect[1])
-            self.screen.blit(rect[0], rect[1].topleft)
+    def decreaseBrightness(self):
+        for tileObject in self.tileArray:
+            if tileObject.shadow>10:
+                tileObject.shadow-=10
+            else:
+                tileObject.shadow = 0
             
+
+            
+    
+    def addFog(self):
+        for fog in self.fogSurfaces:
+            self.screen.blit(fog,(0,0))
+        pass
        
 
     def isGrounded(self):
@@ -93,10 +125,3 @@ class Background:
                     else:
                          player.position.y = rect[1].top-player.playerRectangle.height
                          player.velocity.y = 0
-
-                    
-
-           
-
-                        
-
