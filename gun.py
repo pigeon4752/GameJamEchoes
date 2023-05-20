@@ -7,11 +7,14 @@ class Gun:
     height = 5
     
     def __init__(self, player_rect):
+        # player_rect coords used for placing gun on player
+        self.player_rect = player_rect
         self.gunRect = pygame.Rect(0, 0, Gun.width, Gun.height)
         
 
     def fire_gun(self, angle, click_duration):
         projectile = Projectile(self.gunRect.x, self.gunRect.y, angle=angle)
         print("pewpew")
+        
         pass
 

@@ -27,11 +27,12 @@ class main:
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                MouseHandler.increment_counter
+                # need to make mousehandler instance
+                MouseHandler.increment_counter()
 
             elif event.type == pygame.MOUSEBUTTONUP:
-                angle = MouseHandler.mouse_angle
-                click_duration = MouseHandler.click_duration
+                angle = MouseHandler.mouse_angle()
+                click_duration = MouseHandler.click_duration()
                 player1.gun.fire_gun(angle, click_duration)
 
         # Get state of all keys
