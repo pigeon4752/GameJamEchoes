@@ -9,13 +9,14 @@ from Background import Background
 class main:
 
     pygame.init()
-    SCREEN_WIDTH = 800
-    SCREEN_HEIGHT = 800
+    SCREEN_WIDTH = 768
+    SCREEN_HEIGHT = 768
     
     screen = pygame.display.set_mode([SCREEN_HEIGHT, SCREEN_WIDTH])
     background = Background(screen,SCREEN_WIDTH,SCREEN_HEIGHT)
     clock = pygame.time.Clock()
     player1 = Player(screen,background,5)
+    
     keyHandler = KeyHandler(player1,background)
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
@@ -48,36 +49,30 @@ class main:
         # indicates length of time mouse down. for charging shot
         if mouse_down:
             mousehandler.increment_counter()
-
         
         #screen.blit(bg, (0, 0))
         
 
         # Get state of all keys
         keys = pygame.key.get_pressed()
-
-        ##THERE IS A NECESSARY ORDER
-        ## WE WANT THE RECTANGLE/HITBOX AROUND THE SPRITE TO BE COVERED OVER BY THE WHITE AS IT CAN'T BE MADE TRANSPARENT
-        ## THE HITBOX IS CONSIDERED AN ENTITY/ ALL RECTANGLES ARE CONSIDERED ENTITIES
         keyHandler.handleKeys(keys,dt)
 
-        entityHandler.updateEntities(dt) ##DRAW ALL HITBOXES 
+        
         screen.fill((0, 0, 0))
-        #screen.fill((255, 255, 255)) ## WIPE HITBOES
-        #screen.blit(bg, (0, 0)) ## ADD BACKGROUND
-        #background.addBigFog()
-        entityHandler.updateSprites(dt) ## UPDATE ALL SPRITES
-        # BAD CODE
-        entityHandler.updateEntities(dt)
+        entityHandler.updateEntities(dt) ##DRAW ALL HITBOXES
+        background.updateMap() ## Add all walls and fog
         mouse_coords = pygame.mouse.get_pos()
         angle = mousehandler.mouse_angle(mouse_coords, player1.position)
         player1.gun.setAngle(angle)
         player1.gun.update()
         player1.gun.draw()
 
-        background.updateMap() ## Add all walls
-        #background.addFog()
+        
 
+        
+       
+        
+        
 
 
         # Flip the display
