@@ -21,29 +21,34 @@ class main:
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
     bg = pygame.image.load("background.png")
-    
+    mousehandler = MouseHandler()
+
+    mouse_down = False
     running = True
     while running:
         dt = clock.tick(60)
         dt = dt/40
 
 
-        angle = MouseHandler.mouse_angle
         # player1.passAngleToGun(angle)
-
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                # need to make mousehandler instance
-                MouseHandler.increment_counter()
+                mouse_down = True
 
             elif event.type == pygame.MOUSEBUTTONUP:
-                angle = MouseHandler().mouse_angle()
-                click_duration = MouseHandler().click_duration()
-                player1.gun.fire_gun(angle, click_duration)
+                angle = mousehandler.mouse_angle(pygame.mouse.get_pos(), player1.position)
+                click_duration = mousehandler.click_duration()
+                player1.fire(angle, click_duration)
+                mouse_down = False
+                
 
-        
+        # indicates length of time mouse down. for charging shot
+        if mouse_down:
+            mousehandler.increment_counter()
+
         #screen.blit(bg, (0, 0))
         
 

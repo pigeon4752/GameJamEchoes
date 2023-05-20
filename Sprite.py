@@ -88,12 +88,6 @@ class Sprite:
     def updateSprite(self):
         self.screen.blit(self.spriteImage, self.playerRectangle.topleft)
 
-    
-    def fire(self, angle, click_duration):
-        self.gun.fire_gun(angle, click_duration)
-        print(click_duration)
-        print("click")
-
 
         
 
