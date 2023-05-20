@@ -3,11 +3,22 @@ import numpy as np
 from PIL import Image
 class Background:
     
-    def __init__(self,screen):
+    def __init__(self,screen,SCREEN_WIDTH,SCREEN_HEIGHT):
         self.screen = screen
         self.rectArray = []
         self.polyArray = []
+        self.fogSurfaces = []
+        self.screenHeight = SCREEN_HEIGHT
+        self.screenWidth = SCREEN_WIDTH
+        #fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
+        #fogSurface.fill((0, 0, 0, 100))
+        
+        
+        #self.fogSurfaces.append(fogSurface)
         self.createNewBackground()
+        
+        
+        
         
     
     def createNewBackground(self):
@@ -16,7 +27,6 @@ class Background:
         #img = Image.open('file.bmp')
         self.map = np.array(Image.open('map.bmp'))
         cobble = pygame.image.load("cobble.png")
-        print(self.map)
         tileSize = self.screen.get_height()/32
         for y in range(int (self.map.size/32)):
             for x in range(int (self.map.size/32)):
@@ -25,29 +35,32 @@ class Background:
                 if tileValue == 0:
                     pygame.draw.rect(self.screen, (0, 0, 0), tileRect)
                     self.screen.blit(cobble, tileRect.topleft)
-                    self.rectArray.append((cobble,tileRect))
+                    self.rectArray.append((cobble,tileRect,255))
                 #elif tile_value == 1:
+                    #pygame.draw.rect(self.screen, (255, 0, 0), tile_rect,255)
                     #self.rectArray.append(("white",tile_rect))
-                    #pygame.draw.rect(self.screen, (255, 0, 0), tile_rect)
+                    
         
         
        
     
-    def updatePosition(self):
-        
-        
-            
-                #
-                #
-
-                #  # Draw an empty tile
-                #elif tile_value == 1:
-                #    pygame.draw.rect(screen, (255, 0, 0), tile_rect)  # Draw a wall tile
-
-        for rect in self.rectArray:
+    def updateMap(self):
+        for rect in self.rectArray: 
             pygame.draw.rect(self.screen,"black",rect[1])
             self.screen.blit(rect[0], rect[1].topleft)
             
+        #fog_rect = pygame.Rect(100, 100, 200, 200)
+        #fog_surface.set_alpha(100, fog_rect)
+    def addBigFog(self):
+        fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
+        fogSurface.fill((0, 0, 0, 255))
+        self.screen.blit(fogSurface,(0,0))
+
+    
+    def addFog(self):
+        for fog in self.fogSurfaces:
+            self.screen.blit(fog,(0,0))
+        pass
        
 
     def isGrounded(self):
