@@ -24,8 +24,6 @@ class main:
         dt = clock.tick(60)
         dt = dt/40
 
-        angle = MouseHandler.mouse_angle
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -34,8 +32,8 @@ class main:
                 MouseHandler.increment_counter()
 
             elif event.type == pygame.MOUSEBUTTONUP:
-                angle = MouseHandler.mouse_angle()
-                click_duration = MouseHandler.click_duration()
+                angle = MouseHandler().mouse_angle()
+                click_duration = MouseHandler().click_duration()
                 player1.gun.fire_gun(angle, click_duration)
 
         screen.fill((255, 255, 255))
