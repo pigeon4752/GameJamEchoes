@@ -19,15 +19,29 @@ class main:
     keyHandler = KeyHandler(player1)
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
-    bg = pygame.image.load("background.PNG")
+    bg = pygame.image.load("background.png")
     
     running = True
     while running:
         dt = clock.tick(60)
-        dt = dt/50
+        dt = dt/40
+
+        angle = MouseHandler.mouse_angle
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                MouseHandler.increment_counter
+
+            elif event.type == pygame.MOUSEBUTTONUP:
+                
+                click_duration = MouseHandler.click_duration
+                player1.gun.fire_gun(angle, click_duration)
+
+        screen.fill((255, 255, 255))
+        screen.blit(bg, (0, 0))
+        background.updatePosition()
 
         # Get state of all keys
         keys = pygame.key.get_pressed()
