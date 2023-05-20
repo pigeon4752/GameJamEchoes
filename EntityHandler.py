@@ -12,3 +12,8 @@ class EntityHandler:
             entity.update(dt)
             entity.draw()
         pass
+
+    def updateSprites(self,dt):
+        
+        for entity in self.entityArray:
+            entity.updateSprite()

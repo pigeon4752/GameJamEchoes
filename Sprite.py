@@ -10,9 +10,10 @@ class Sprite:
     MAX_X_VELOCITY = 8
     
 
-    def __init__(self,screen,background,width=25,size= 25,colour="red"):
+    def __init__(self,screen,background,width=25,size= 25,colour="red",spriteImage = "player.png"):
         self.background = background
         self.screen = screen
+        self.spriteImage =  pygame.image.load(spriteImage)
         self.position = pygame.Vector2(400,100)
         self.velocity = pygame.Vector2(0,0)
         self.playerRectangle = pygame.Rect(self.position.x,self.position.y,width,size)
@@ -83,6 +84,10 @@ class Sprite:
     def update(self,dt):
         self.updatePosition(dt)
         self.playerRectangle.topleft = (self.position.x,self.position.y)
+    
+    def updateSprite(self):
+        self.screen.blit(self.spriteImage, self.playerRectangle.topleft)
+
 
     def draw(self):
         pygame.draw.rect(self.screen,self.colour,self.playerRectangle)
