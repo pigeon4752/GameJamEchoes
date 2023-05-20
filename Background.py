@@ -40,6 +40,7 @@ class Background:
         fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
 
         tileSize = self.screen.get_height()/dimension
+        print(tileSize)
         for x in range(int (self.map.size/dimension)):
             for y in range(int (self.map.size/dimension)):
                 tileValue = self.map[x][y]
@@ -65,21 +66,33 @@ class Background:
                 self.screen.blit(tileObject.image, tileObject.rect.topleft)
                 fogSurface.fill((0, 0, 0, tileObject.shadow))
                 self.screen.blit(fogSurface,(tileObject.rect.topleft),tileObject.rect)
+        self.revertBrightness()
 
     def decreaseBrightness(self):
         for tileObject in self.tileArray:
-            if tileObject.shadow>10:
-                tileObject.shadow-=10
+            if tileObject.shadow>50:
+                tileObject.shadow-=50
             else:
                 tileObject.shadow = 0
             
-
+    def revertBrightness(self):
+        for tileObject in self.tileArray:
+            if tileObject.shadow!=255:
+                if (tileObject.shadow+20>255):
+                    tileObject.shadow = 255
+                else:
+                    tileObject.shadow+=20
             
     
     def addFog(self):
         for fog in self.fogSurfaces:
             self.screen.blit(fog,(0,0))
         pass
+
+    def getTileArray(self):
+        return(self.tileArray)
+
+    
        
 
     def isGrounded(self):
