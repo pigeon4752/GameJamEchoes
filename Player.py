@@ -1,6 +1,8 @@
 import pygame
 from Sprite import Sprite
 from gun import Gun
+from projectileHandler import ProjectileHandler
+
 class Player(Sprite):
     moveSpeed = 2
     gravity = 1
@@ -11,6 +13,7 @@ class Player(Sprite):
         super().update(dt)
 
 
+
     def passAngleToGun(self,angle):
         self.gun.setAngle(angle)
 
@@ -18,10 +21,11 @@ class Player(Sprite):
         super().draw()
     
     def fire(self, angle, click_duration):
-        self.gun.fire_gun(angle, click_duration)
-
+        projectile = self.gun.fire_gun(angle, click_duration, self.background, self.screen)
+        self.projectileHandler.addProjectile(projectile)
 
     def __init__(self,screen,background,moveSpeed,rendered = True):
         super().__init__(screen,background,rendered=rendered)
         self.moveSpeed = moveSpeed
         self.gun = Gun(self.playerRectangle,screen)
+        self.projectileHandler = ProjectileHandler()
