@@ -40,7 +40,7 @@ class Background:
         fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
 
         tileSize = self.screen.get_height()/dimension
-        print(tileSize)
+        
         for x in range(int (self.map.size/dimension)):
             for y in range(int (self.map.size/dimension)):
                 tileValue = self.map[x][y]

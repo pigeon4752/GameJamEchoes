@@ -23,7 +23,7 @@ class Player(Sprite):
         print("click")
 
 
-    def __init__(self,screen,background,moveSpeed):
-        super().__init__(screen,background)
+    def __init__(self,screen,background,moveSpeed,rendered = True):
+        super().__init__(screen,background,rendered=rendered)
         self.moveSpeed = moveSpeed
         self.gun = Gun(self.playerRectangle,screen)
