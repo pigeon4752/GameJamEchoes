@@ -21,3 +21,4 @@ class Gun:
 
     def draw(self):
         self.screen.blit(self.gunImage, (self.player_rect.centerx, self.player_rect.centery))
+
