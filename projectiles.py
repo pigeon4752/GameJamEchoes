@@ -31,7 +31,7 @@ class Projectile():
         p1FinalMomentum = math.sqrt(p1FinalTrajectory[0] * p1FinalTrajectory[0] + p1FinalTrajectory[1] * p1FinalTrajectory[1])
         p2FinalMomentum = math.sqrt(p2FinalTrajectory[0] * p2FinalTrajectory[0] + p2FinalTrajectory[1] * p2FinalTrajectory[1])
         # // Scale the resultant trajectories if we've accidentally broken the laws of physics.
-        mag = (p1InitialMomentum + p2InitialMomentum) / (p1FinalMomentum + p2FinalMomentum)
+        mag = ((p1InitialMomentum + p2InitialMomentum) / (p1FinalMomentum + p2FinalMomentum))*1.6
         # // Calculate the final x and y speed settings for the two balls after collision.
         xSpeed1 = p1FinalTrajectory[0] * mag
         ySpeed1 = p1FinalTrajectory[1] * mag
@@ -67,17 +67,21 @@ class Projectile():
         tiles = self.background.getTileArray()
         for tile in tiles:
             if tile.rect.colliderect(pygame.Rect(self.position.x,self.position.y,10,10)):
+                self.draw()
                 self.deflect(self.position.x,tile.rect.center[0],self.position.y,tile.rect.center[1],self.velocity.x,0,self.velocity.y,0)
                 self.bounces+=1
+                
 
-
-    def update(self):   
+    def update(self):    
         self.position.x += self.velocity.x
         self.position.y += self.velocity.y
         self.checkCollision()
+        if((self.velocity.x<3 and self.velocity.x>-3 )and (self.velocity.y<3 and self.velocity.y>-3)):
+            return True
+        return False
 
     def draw(self):
-        pygame.draw.circle(self.screen,"green",(self.position.x,self.position.y),5)
+        pygame.draw.circle(self.screen,"white",(self.position.x,self.position.y),5)
         
 
     def __init__(self, x, y,xVelocity,yVelocity,background,screen):

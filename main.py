@@ -6,6 +6,7 @@ from keyHandler import KeyHandler
 from EntityHandler import EntityHandler
 from Background import Background
 from projectiles import Projectile
+from projectileHandler import ProjectileHandler
 
 class main:
 
@@ -23,7 +24,11 @@ class main:
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
     bg = pygame.image.load("background.png")
-    projectile = Projectile(400,400,1,1,background,screen)
+    projectileHandler = ProjectileHandler()
+
+
+    projectile = Projectile(400,400,11,0,background,screen)
+    projectileHandler.addProjectile(projectile)
 
     running = True
     while running:
@@ -55,8 +60,7 @@ class main:
         keyHandler.handleKeys(keys,dt)
         screen.fill((0, 0, 0))
         entityHandler.updateEntities(dt) ##DRAW ALL HITBOXES
-        projectile.update()
-        projectile.draw()
+        projectileHandler.update()
         background.updateMap() ## Add all walls and fog
        
         
