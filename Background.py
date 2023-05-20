@@ -51,6 +51,9 @@ class Background:
             
         #fog_rect = pygame.Rect(100, 100, 200, 200)
         #fog_surface.set_alpha(100, fog_rect)
+
+   
+
     def addBigFog(self):
         fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
         fogSurface.fill((0, 0, 0, 255))
@@ -91,7 +94,7 @@ class Background:
                         player.position.y = rect[1].top + rect[1].height
                         player.velocity.y = 0
 
-            if playerBottom > rect[1].top-1 and playerTop < rect[1].bottom:
+            if playerBottom > rect[1].top and playerTop < rect[1].bottom:
                 # Player is within the vertical bounds of the current platform
                 if previousX + player.playerRectangle.width <= rect[1].left:
                     # Player was to the left of the platform in the previous frame

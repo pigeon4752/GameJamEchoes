@@ -40,7 +40,7 @@ class main:
 
         screen.fill((255, 255, 255))
         screen.blit(bg, (0, 0))
-        background.updatePosition()
+        
 
         # Get state of all keys
         keys = pygame.key.get_pressed()
