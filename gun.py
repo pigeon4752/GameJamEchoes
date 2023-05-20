@@ -1,4 +1,5 @@
 import pygame
+import os
 from projectiles import Projectile
 
 class Gun:
@@ -6,25 +7,28 @@ class Gun:
     width = 10
     height = 5
     angle = 0
-    def __init__(self, player_rect,surface):
-        self.screen=pygame.Surface((800,800))
+    def __init__(self, player_rect,screen):
         self.player_rect = player_rect
-        self.gunRect = pygame.Rect(0, 0, Gun.width, Gun.height)
+        self.screen = screen
+        self.gunImage = pygame.image.load(os.path.join('gun.png'))
+
         
     def fire_gun(self, angle, click_duration):
-        projectile = Projectile(self.gunRect.x, self.gunRect.y, angle=angle)
-        print("pewpew")
-        
         pass
+    #     projectile = Projectile(self.gunRect.x, self.gunRect.y, angle=angle)
+    #     print("pewpew")
+    #     pass
 
-    def setAngle(self,angle):
+    def setAngle(self, angle):
         self.angle = angle
+    
+    def update(self):
+        pygame.transform.rotate(self.gunImage, self.angle)
 
     def draw(self):
-        self.gunRect.topleft=(self.player_rect.left+(self.player_rect.width/2),self.player_rect.top+(self.player_rect.height/2))
-        self.rotate(self.angle)
-        pygame.draw.rect(self.screen,"yellow",self.gunRect)
+        self.screen.blit(self.gunImage, (self.player_rect.centerx, self.player_rect.centery))
+        pass
 
     def rotate(self,angle):
-        pygame.transform.rotate(self.screen,angle)
+        pass
 

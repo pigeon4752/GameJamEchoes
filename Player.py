@@ -10,14 +10,20 @@ class Player(Sprite):
         # self.updatePosition()
         super().update(dt)
 
+
     def passAngleToGun(self,angle):
         self.gun.setAngle(angle)
 
     def draw(self):
         super().draw()
-        self.gun.draw()
+    
+    def fire(self, angle, click_duration):
+        self.gun.fire_gun(angle, click_duration)
+        print(click_duration)
+        print("click")
 
-    def __init__(self,screen,background,moveSpeed):
-        super().__init__(screen,background)
+
+    def __init__(self,screen,background,moveSpeed,rendered = True):
+        super().__init__(screen,background,rendered=rendered)
         self.moveSpeed = moveSpeed
         self.gun = Gun(self.playerRectangle,screen)
