@@ -10,7 +10,7 @@ class Sprite:
     MAX_X_VELOCITY = 8
     
 
-    def __init__(self,screen,background,width=24,size= 24,colour="red",spriteImage = "player.png"):
+    def __init__(self,screen,background,width=24,size= 24,colour="red",spriteImage = "player.png",rendered = False,health = 100):
         self.background = background
         self.screen = screen
         self.spriteImage =  pygame.image.load(spriteImage)
@@ -19,6 +19,8 @@ class Sprite:
         self.playerRectangle = pygame.Rect(self.position.x,self.position.y,width,size)
         self.colour = colour
         self.isGrounded()
+        self.rendered = rendered
+        self.health = health
         # self.gun = Gun(self.playerRectangle)
 
     def updatePosition(self,dt):
@@ -95,12 +97,6 @@ class Sprite:
     
     def updateSprite(self):
         self.screen.blit(self.spriteImage, self.playerRectangle.topleft)
-
-    
-    def fire(self, angle, click_duration):
-        self.gun.fire_gun(angle, click_duration)
-        print(click_duration)
-        print("click")
 
 
         

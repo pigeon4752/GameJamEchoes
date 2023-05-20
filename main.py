@@ -1,12 +1,14 @@
 import pygame
 from mouseHandler import MouseHandler
 import Background as Background
+from Goblin import Goblin
 from Player import Player
 from keyHandler import KeyHandler
 from EntityHandler import EntityHandler
 from Background import Background
 from projectiles import Projectile
 from projectileHandler import ProjectileHandler
+
 
 class main:
 
@@ -20,9 +22,12 @@ class main:
     player1 = Player(screen,background,5)
     mouseHandler = MouseHandler()
     
+    gobbo = Goblin(screen,background)
+    
     keyHandler = KeyHandler(player1,background)
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
+    entityHandler.addEntity(gobbo)
     bg = pygame.image.load("background.png")
     projectileHandler = ProjectileHandler()
 
@@ -30,28 +35,37 @@ class main:
     projectile = Projectile(400,400,11,0,background,screen)
     projectileHandler.addProjectile(projectile)
 
+    mousehandler = MouseHandler()
+
+    mouse_down = False
     running = True
     while running:
         dt = clock.tick(30)
         dt = dt/40
 
 
-        # angle = MouseHandler.mouse_angle
-        # player1.passAngleToGun(angle)
 
+        # angle = MouseHandler.mouse_angle
+
+        # player1.passAngleToGun(angle)
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                # need to make mousehandler instance
-                mouseHandler.increment_counter()
+                mouse_down = True
 
             elif event.type == pygame.MOUSEBUTTONUP:
-                angle = mouseHandler.mouse_angle()
-                click_duration = mouseHandler.click_duration()
-                player1.gun.fire_gun(angle, click_duration)
+                angle = mousehandler.mouse_angle(pygame.mouse.get_pos(), player1.position)
+                click_duration = mousehandler.click_duration()
+                player1.fire(angle, click_duration)
+                mouse_down = False
+                
 
-        
+        # indicates length of time mouse down. for charging shot
+        if mouse_down:
+            mousehandler.increment_counter()
+
         #screen.blit(bg, (0, 0))
         
 
