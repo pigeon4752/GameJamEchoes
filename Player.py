@@ -19,8 +19,6 @@ class Player(Sprite):
     
     def fire(self, angle, click_duration):
         self.gun.fire_gun(angle, click_duration)
-        print(click_duration)
-        print("click")
 
 
     def __init__(self,screen,background,moveSpeed,rendered = True):
