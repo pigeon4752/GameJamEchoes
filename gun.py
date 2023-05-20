@@ -14,6 +14,7 @@ class Gun:
     def fire_gun(self, angle, click_duration):
         projectile = Projectile(self.gunRect.x, self.gunRect.y, angle=angle)
         print("pewpew")
+        
         pass
 
     def setAngle(self,angle):
