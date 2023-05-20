@@ -8,13 +8,13 @@ class KeyHandler():
                 self.player.changeYVelocity(-15)
         if keys[pygame.K_a]:
             # print("'A' key is being pressed")
-            self.player.changeXVelocity(-self.player.moveSpeed*dt)
+            self.player.changeXVelocity(-self.player.moveSpeed)
         if keys[pygame.K_s]:
             # print("'S' key is being pressed")
-            self.player.changeYVelocity(self.player.moveSpeed*dt)
+            self.player.changeYVelocity(self.player.moveSpeed)
         if keys[pygame.K_d]:
             # print("'D' key is being pressed")
-            self.player.changeXVelocity(self.player.moveSpeed*dt)
+            self.player.changeXVelocity(self.player.moveSpeed)
         if keys[pygame.K_j]:
             self.background.decreaseBrightness()
             
