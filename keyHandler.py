@@ -15,6 +15,10 @@ class KeyHandler():
         if keys[pygame.K_d]:
             # print("'D' key is being pressed")
             self.player.changeXVelocity(self.player.moveSpeed*dt)
+        if keys[pygame.K_j]:
+            self.background.decreaseBrightness()
+            
 
-    def __init__(self,player):
+    def __init__(self,player,background):
         self.player = player
+        self.background = background
