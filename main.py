@@ -19,12 +19,12 @@ class main:
     clock = pygame.time.Clock()
     player1 = Player(screen,background,5)
     
-    gobbo = Goblin(screen,background)
+    #gobbo = Goblin(screen,background)
     
     keyHandler = KeyHandler(player1,background)
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
-    entityHandler.addEntity(gobbo)
+    #entityHandler.addEntity(gobbo)
     bg = pygame.image.load("background.png")
     mousehandler = MouseHandler()
 

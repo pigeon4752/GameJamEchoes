@@ -11,6 +11,6 @@ class Goblin(Bot):
     def run(self):
         while self.health>0:
             #print(self.position.x)
-            self.changeXVelocity(random.randint(-20,20))
-            self.changeYVelocity(random.randint(-10,10))
-        time.sleep(100)
+            self.changeXVelocity(random.randint(-10,10))
+            self.changeYVelocity(random.randint(-5,5))
+        time.sleep(500)

@@ -17,6 +17,8 @@ class KeyHandler():
             self.player.changeXVelocity(self.player.moveSpeed*dt)
         if keys[pygame.K_j]:
             self.background.decreaseBrightness()
+        if keys[pygame.K_l]:
+            self.background.printMap()
             
 
     def __init__(self,player,background):

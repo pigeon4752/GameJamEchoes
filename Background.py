@@ -9,7 +9,6 @@ class Background:
     def __init__(self,screen,SCREEN_WIDTH,SCREEN_HEIGHT):
         self.screen = screen
         self.tileArray = []
-        self.polyArray = []
         self.fogSurfaces = []
         self.screenHeight = SCREEN_HEIGHT
         self.screenWidth = SCREEN_WIDTH
@@ -23,30 +22,24 @@ class Background:
         
     
 
-    
-   
-        
-        
-    
-
 
     def createNewBackground(self):
         #rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
         
         #img = Image.open('file.bmp')
         self.map = np.array(Image.open('map.bmp'))
-        dimension = int(math.sqrt(self.map.size))
+        self.dimension = int(math.sqrt(self.map.size))
         cobble = pygame.image.load("cobble.png")
         fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
 
-        tileSize = self.screen.get_height()/dimension
+        self.tileSize = self.screen.get_height()/self.dimension
         
-        for x in range(int (self.map.size/dimension)):
-            for y in range(int (self.map.size/dimension)):
+        for x in range(int (self.map.size/self.dimension)):
+            for y in range(int (self.map.size/self.dimension)):
                 tileValue = self.map[x][y]
                 
                 if tileValue == 0:
-                    tileRect = pygame.Rect(x * tileSize, y * tileSize, tileSize, tileSize)
+                    tileRect = pygame.Rect(x * self.tileSize, y * self.tileSize, self.tileSize, self.tileSize)
                     tileObject = tile(cobble,tileRect,255,x,y)
                     #pygame.draw.rect(self.screen, (0, 0, 0), tileRect)
                     #self.screen.blit(cobble, tileRect.topleft)
@@ -67,6 +60,17 @@ class Background:
                 fogSurface.fill((0, 0, 0, tileObject.shadow))
                 self.screen.blit(fogSurface,(tileObject.rect.topleft),tileObject.rect)
         self.revertBrightness()
+
+    def modifyCoordinateMap(self,oldCoordinates,newCoordinates, representation):
+        
+        self.map[int(oldCoordinates.y)][int(oldCoordinates.x)] = 1
+        self.map[int(newCoordinates.y)][int(newCoordinates.x)] = representation
+
+    def printMap(self):
+        print("/n")
+        for row in self.map:
+            print(row)
+
 
     def decreaseBrightness(self):
         for tileObject in self.tileArray:

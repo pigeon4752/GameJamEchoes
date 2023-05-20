@@ -3,10 +3,12 @@ from Sprite import Sprite
 from gun import Gun
 class Player(Sprite):
     moveSpeed = 2
-    gravity = 1
+    
 
     def update(self,dt):
         self.changeYVelocity(self.gravity*dt)
+        self.coordinates = self.calculateCoordinates(self.position.x, self.position.y)
+        self.background.modifyCoordinateMap(self.coordinates,self.calculateCoordinates(self.coordinates.x, self.coordinates.y),2)
         # self.updatePosition()
         super().update(dt)
 
@@ -21,6 +23,7 @@ class Player(Sprite):
         self.gun.fire_gun(angle, click_duration)
         print(click_duration)
         print("click")
+
 
 
     def __init__(self,screen,background,moveSpeed,rendered = True):
