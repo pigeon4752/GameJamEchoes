@@ -36,18 +36,18 @@ class main:
     projectile = Projectile(400,400,11,0,background,screen)
     projectileHandler.addProjectile(projectile)
 
-
     mousehandler = MouseHandler()
 
     mouse_down = False
-
     running = True
     while running:
         dt = clock.tick(30)
         dt = dt/40
 
 
+
         # angle = MouseHandler.mouse_angle
+
         # player1.passAngleToGun(angle)
         
         for event in pygame.event.get():
