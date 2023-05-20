@@ -25,7 +25,7 @@ class main:
         dt = dt/40
 
         angle = MouseHandler.mouse_angle
-
+        # player1.passAngleToGun(angle)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False

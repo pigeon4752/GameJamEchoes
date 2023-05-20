@@ -21,8 +21,8 @@ class Gun:
 
     def draw(self):
         self.gunRect.topleft=(self.player_rect.left+(self.player_rect.width/2),self.player_rect.top+(self.player_rect.height/2))
-        pygame.draw.rect(self.screen,"yellow",self.gunRect)
         self.rotate(self.angle)
+        pygame.draw.rect(self.screen,"yellow",self.gunRect)
 
     def rotate(self,angle):
         pygame.transform.rotate(self.screen,angle)
