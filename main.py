@@ -27,7 +27,7 @@ class main:
     keyHandler = KeyHandler(player1,background)
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
-    entityHandler.addEntity(gobbo)
+    #entityHandler.addEntity(gobbo)
     bg = pygame.image.load("background.png")
 
     projectileHandler = ProjectileHandler()
