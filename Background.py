@@ -96,32 +96,33 @@ class Background:
         playerBottom = player.position.y+player.playerRectangle.height
         playerLeft = player.position.x
 
-        for rect in self.rectArray:
-            if playerRight > rect[1].left and playerLeft < rect[1].right:
-                if playerBottom > rect[1].top and playerTop < rect[1].bottom:
+        for tile in self.tileArray:
+            rect=tile.rect
+            if playerRight > rect.left and playerLeft < rect.right:
+                if playerBottom > rect.top and playerTop < rect.bottom:
                     # Player is within the vertical bounds of the current platform
                     # Player is within the horizontal bounds of the current platform
-                    if previousX + player.playerRectangle.width <= rect[1].left:
+                    if previousX + player.playerRectangle.width <= rect.left:
                             # Player was to the left of the platform in the previous frame
-                            if playerRight >= rect[1].left and playerBottom>rect[1].top+(rect[1].height/4):  # Added check
-                                player.position.x = rect[1].left - player.playerRectangle.width
+                            if playerRight >= rect.left and playerBottom>rect.top+(rect.height/4):  # Added check
+                                player.position.x = rect.left - player.playerRectangle.width
                                 player.velocity.x = 0
-                    elif previousX >= rect[1].right:
+                    elif previousX >= rect.right:
                             # Player was to the right of the platform in the previous frame
-                            if playerLeft <= rect[1].right and playerBottom>rect[1].top+(rect[1].height/4):  # Added check
-                                player.position.x = rect[1].right
+                            if playerLeft <= rect.right and playerBottom>rect.top+(rect.height/4):  # Added check
+                                player.position.x = rect.right
                                 player.velocity.x = 0
-                    elif previousY + player.playerRectangle.height <= rect[1].top:
+                    elif previousY + player.playerRectangle.height <= rect.top:
                         # Player was above the platform in the previous frame
-                        if playerBottom > rect[1].top:  # Added check
-                            player.position.y = rect[1].top - player.playerRectangle.height
+                        if playerBottom > rect.top:  # Added check
+                            player.position.y = rect.top - player.playerRectangle.height
                             player.velocity.y = 0
-                    elif previousY >= rect[1].bottom:
+                    elif previousY >= rect.bottom:
                         # Player was below the platform in the previous frame
-                        if playerTop < rect[1].bottom+2:  # Added check
-                            player.position.y = rect[1].bottom+2
+                        if playerTop < rect.bottom+2:  # Added check
+                            player.position.y = rect.bottom+2
                             player.velocity.y = -0.01
                     
                     else:
-                         player.position.y = rect[1].top-player.playerRectangle.height
+                         player.position.y = rect.top-player.playerRectangle.height
                          player.velocity.y = 0

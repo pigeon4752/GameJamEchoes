@@ -5,7 +5,7 @@ class KeyHandler():
         if keys[pygame.K_w]:
             # print("'W' key is being pressed")
             if (self.player.velocity.y == 0):
-                self.player.changeYVelocity(-30*dt)
+                self.player.changeYVelocity(-15)
         if keys[pygame.K_a]:
             # print("'A' key is being pressed")
             self.player.changeXVelocity(-self.player.moveSpeed*dt)
