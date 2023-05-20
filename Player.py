@@ -20,4 +20,6 @@ class Player(Sprite):
     def __init__(self,screen,background,moveSpeed):
         super().__init__(screen,background)
         self.moveSpeed = moveSpeed
-        self.gun = Gun(self.playerRectangle,screen)
+        
+
+    

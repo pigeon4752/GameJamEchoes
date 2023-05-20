@@ -35,7 +35,7 @@ class main:
             elif event.type == pygame.MOUSEBUTTONUP:
                 mouse_coords = pygame.mouse.get_pos()
                 angle = mousehandler.mouse_angle(mouse_coords, player1.position)
-                click_duration = mousehandler.click_duration()
+                click_duration = mousehandler.mouse_duration_count
                 player1.gun.fire_gun(angle, click_duration)
                 mouse_down = False
 
@@ -51,7 +51,11 @@ class main:
         keys = pygame.key.get_pressed()
         keyHandler.handleKeys(keys,dt)
         entityHandler.updateEntities(dt)
-        
+        mouse_coords = pygame.mouse.get_pos()
+        angle = mousehandler.mouse_angle(mouse_coords, player1.position)
+        player1.gun.setAngle(angle)
+        player1.gun.update()
+        player1.gun.draw()
         
 
 
