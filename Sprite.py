@@ -7,7 +7,7 @@ class Sprite:
     position = pygame.Vector2(0,0)
     velocity = pygame.Vector2(0,0)
     MAX_Y_VELOCITY = 30
-    MAX_X_VELOCITY = 10
+    MAX_X_VELOCITY = 8
     
 
     def __init__(self,screen,background,width=25,size= 25,colour="red"):
@@ -18,17 +18,17 @@ class Sprite:
         self.playerRectangle = pygame.Rect(self.position.x,self.position.y,width,size)
         self.colour = colour
         self.isGrounded()
-        self.gun = Gun(self.playerRectangle)
+        # self.gun = Gun(self.playerRectangle)
 
     def updatePosition(self,dt):
         xVel = self.velocity.x*dt
         yVel = self.velocity.y*dt
         if self.velocity.x>0:
-            self.velocity.x = self.velocity.x-0.5
+            self.velocity.x = self.velocity.x-0.8
             if self.velocity.x < 0:
                 self.velocity.x=0
         else:
-            self.velocity.x = self.velocity.x+0.5
+            self.velocity.x = self.velocity.x+0.8
             if self.velocity.x > 0:
                 self.velocity.x=0
         
@@ -45,15 +45,15 @@ class Sprite:
             self.position.x = 0
             self.velocity.x = 0
         elif (self.position.x+self.playerRectangle.width + xVel) > 800:
-            self.position.x=1000-self.playerRectangle.width
+            self.position.x=800-self.playerRectangle.width
             self.velocity.x=0         
         else:
             self.position.x+=xVel
         if (0 > (self.position.y + yVel)):
             self.position.y=0
             self.velocity.y=0
-        elif (self.position.y+self.playerRectangle.height + yVel)>900:     
-            self.position.y=600-self.playerRectangle.height
+        elif (self.position.y+self.playerRectangle.height + yVel)>800:     
+            self.position.y=800-self.playerRectangle.height
             self.velocity.y=0
         else:
             self.position.y+=yVel
@@ -64,12 +64,16 @@ class Sprite:
     def changeXVelocity(self,increment):
             if self.velocity.x+increment>self.MAX_X_VELOCITY:
                 self.velocity.x=self.MAX_X_VELOCITY
+            elif self.velocity.x+increment<0-self.MAX_X_VELOCITY:
+                self.velocity.x=0-self.MAX_X_VELOCITY
             else:
                 self.velocity.x += increment
 
     def changeYVelocity(self,increment):
             if self.velocity.y+increment>self.MAX_Y_VELOCITY:
                 self.velocity.y=self.MAX_Y_VELOCITY
+            elif self.velocity.y+increment<0-self.MAX_Y_VELOCITY:
+                self.velocity.y=0-self.MAX_Y_VELOCITY
             else:
                 self.velocity.y += increment
     
