@@ -6,6 +6,8 @@ from Player import Player
 from keyHandler import KeyHandler
 from EntityHandler import EntityHandler
 from Background import Background
+from projectiles import Projectile
+from projectileHandler import ProjectileHandler
 
 
 class main:
@@ -18,6 +20,7 @@ class main:
     background = Background(screen,SCREEN_WIDTH,SCREEN_HEIGHT)
     clock = pygame.time.Clock()
     player1 = Player(screen,background,5)
+    mouseHandler = MouseHandler()
     
     #gobbo = Goblin(screen,background)
     
@@ -26,16 +29,22 @@ class main:
     entityHandler.addEntity(player1)
     #entityHandler.addEntity(gobbo)
     bg = pygame.image.load("background.png")
+
+    projectileHandler = ProjectileHandler()
+
+
+    projectile = Projectile(400,400,11,0,background,screen)
+    projectileHandler.addProjectile(projectile)
+
     mousehandler = MouseHandler()
 
     mouse_down = False
     running = True
     while running:
-        dt = clock.tick(60)
+        dt = clock.tick(30)
         dt = dt/40
 
-
-        # player1.passAngleToGun(angle)
+        angle = mousehandler.mouse_angle(pygame.mouse.get_pos(), player1.position)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -44,8 +53,8 @@ class main:
                 mouse_down = True
 
             elif event.type == pygame.MOUSEBUTTONUP:
-                angle = mousehandler.mouse_angle(pygame.mouse.get_pos(), player1.position)
                 click_duration = mousehandler.click_duration()
+                # fire projectile at given angle and click strength
                 player1.fire(angle, click_duration)
                 mouse_down = False
                 
@@ -62,12 +71,14 @@ class main:
         keyHandler.handleKeys(keys,dt)
         screen.fill((0, 0, 0))
         entityHandler.updateEntities(dt) ##DRAW ALL HITBOXES
+        projectileHandler.update()
         background.updateMap() ## Add all walls and fog
+        player1.gun.angle = angle
+        player1.gun.update()
+        player1.gun.draw()
        
         
-        
-
-
+    
         # Flip the display
 
         pygame.display.flip()

@@ -7,7 +7,7 @@ class Sprite:
 
     position = pygame.Vector2(0,0)
     velocity = pygame.Vector2(0,0)
-    MAX_Y_VELOCITY = 30
+    MAX_Y_VELOCITY = 21
     MAX_X_VELOCITY = 8
     
     gravity = 1
@@ -53,6 +53,10 @@ class Sprite:
             self.position.x=800-self.playerRectangle.width
             self.velocity.x=0         
         else:
+            if(xVel>self.MAX_X_VELOCITY):
+                xVel=self.MAX_X_VELOCITY
+            elif(xVel<0-self.MAX_X_VELOCITY):
+                xVel = 0-self.MAX_X_VELOCITY
             self.position.x+=xVel
         if (0 > (self.position.y + yVel)):
             self.position.y=0
@@ -61,6 +65,10 @@ class Sprite:
             self.position.y=800-self.playerRectangle.height
             self.velocity.y=0
         else:
+            if(yVel>self.MAX_Y_VELOCITY):
+                yVel=self.MAX_Y_VELOCITY
+            elif(yVel<0-self.MAX_Y_VELOCITY):
+                yVel = 0-self.MAX_Y_VELOCITY
             self.position.y+=yVel
 
         self.background.handlePlayerCollision(self,self.position.x-xVel,self.position.y-yVel)

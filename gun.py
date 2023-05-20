@@ -10,8 +10,8 @@ class Gun:
     def __init__(self, player_rect,screen):
         self.player_rect = player_rect
         self.screen = screen
-        self.gunImage = pygame.image.load(os.path.join('gun.png'))
-
+        self.gunImage = pygame.transform.scale((pygame.image.load(os.path.join('gun.png'))), (20, 10))
+        # self.gunImage = pygame.transform.scale(self.gunImage, (10, 5))
         
     def fire_gun(self, angle, click_duration):
         pass
@@ -19,14 +19,11 @@ class Gun:
     #     print("pewpew")
     #     pass
 
-    def setAngle(self, angle):
-        self.angle = angle
-    
     def update(self):
-        pygame.transform.rotate(self.gunImage, self.angle)
+        self.gunSprite = pygame.transform.rotate(self.gunImage, -(self.angle))
 
     def draw(self):
-        self.screen.blit(self.gunImage, (self.player_rect.centerx, self.player_rect.centery))
+        self.screen.blit(self.gunSprite, (self.player_rect.centerx, self.player_rect.centery))
         pass
 
     def rotate(self,angle):
