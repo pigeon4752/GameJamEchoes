@@ -5,4 +5,5 @@ class Bot(Sprite):
     def __init__(self,screen,background,rendered = False):
         super().__init__(screen,background)
         
-    
+    def updateSprite(self, animObjs):
+        super().updateSprite(animObjs)

@@ -5,8 +5,8 @@ from projectiles import Projectile
 
 class Gun:
     # height and width attributes
-    width = 0
-    height = 0
+    width = 30
+    height = 10
     angle = 0
     projectile_speed = 10
     MAX_VELOCITY = 15
@@ -38,7 +38,7 @@ class Gun:
         self.gunSprite = pygame.transform.rotate(self.gunImage, -(self.angle))
 
     def draw(self):
-        self.screen.blit(self.gunSprite, (self.player_rect.x, self.player_rect.y+10))
+        self.screen.blit(self.gunSprite, (self.player_rect.x+14, self.player_rect.y+15))
         pass
 
     def rotate(self,angle):

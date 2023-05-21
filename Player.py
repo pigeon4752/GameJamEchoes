@@ -10,6 +10,7 @@ class Player(Sprite):
 
     def update(self,dt):
         self.changeYVelocity(self.gravity*dt)
+        self.gun.update()
         # self.updatePosition()
         super().update(dt)
         self.background.addLight(self.position.x-20,self.position.y,50,10)
@@ -20,6 +21,8 @@ class Player(Sprite):
     def updateSprite(self):
         self.AnimationHandler.moveConductor.play()
         super().updateSprite(self.AnimationHandler.animObjs)
+        self.gun.draw()
+        
     
     def fire(self, angle, click_duration):
         projectile = self.gun.fire_gun(angle, click_duration, self.background, self.screen)

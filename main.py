@@ -79,7 +79,7 @@ class main:
     
     background = Background(screen,SCREEN_WIDTH,SCREEN_HEIGHT)
 
-    #Pgobbo = Goblin(screen,background)
+    #gobbo = Goblin(screen,background)
     
     player1 = Player(screen,background,5)
     keyHandler = KeyHandler(player1,background)
@@ -114,6 +114,7 @@ class main:
                 angle = mousehandler.mouse_angle(pygame.mouse.get_pos(), player1.position)
                 click_duration = mousehandler.click_duration()
                 player1.fire(angle, click_duration)
+                
                 mouse_down = False                    
         # indicates length of time mouse down. for charging shot
         if mouse_down:
@@ -123,6 +124,9 @@ class main:
         keys = pygame.key.get_pressed()
         keyHandler.handleKeys(keys,dt)
         screen.fill((0, 0, 0))
+
+        #gun updates
+        player1.gun.angle = (mousehandler.mouse_angle(pygame.mouse.get_pos(), player1.position))
         entityHandler.updateEntities(dt) # DRAW ALL HITBOXES
         projectileHandler.update()
         background.updateMap() # Update light
