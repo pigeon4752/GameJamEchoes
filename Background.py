@@ -34,7 +34,7 @@ class Background:
         #rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
         
         #img = Image.open('file.bmp')
-        self.map = np.array(Image.open('map.bmp'))
+        self.map = np.array(Image.open('oldmap32.bmp'))
         dimension = int(math.sqrt(self.map.size))
         cobble = pygame.image.load("cobble.png")
         fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
