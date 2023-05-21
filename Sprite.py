@@ -1,6 +1,7 @@
 import pygame
 import Background as background
-from gun import Gun
+
+from gun import Gun 
 
 class Sprite:
 
@@ -21,6 +22,7 @@ class Sprite:
         self.isGrounded()
         self.rendered = rendered
         self.health = health
+        self.player_facing = 'right'
         # self.gun = Gun(self.playerRectangle)
 
     def updatePosition(self,dt):
@@ -95,9 +97,16 @@ class Sprite:
         self.updatePosition(dt)
         self.playerRectangle.topleft = (self.position.x,self.position.y)
     
-    def updateSprite(self):
-        self.screen.blit(self.spriteImage, self.playerRectangle.topleft)
-
+    def updateSprite(self, animObjs):
+        if self.velocity.x > 0:
+            self.player_facing = 'right'
+            animObjs['walk_right'].blit(self.screen, self.playerRectangle.topleft)
+        elif self.velocity.x < 0:
+            self.player_facing = 'left'
+            animObjs['walk_left'].blit(self.screen, self.playerRectangle.topleft)
+        else:
+            # render idle animation (with the correct direction that the player was facing)
+            animObjs[f'idle_{self.player_facing}'].blit(self.screen, self.playerRectangle.topleft)
 
         
 
