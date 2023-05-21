@@ -36,7 +36,7 @@ class main:
         pygame.mixer.music.set_endevent(pygame.USEREVENT+1)
         pygame.mixer.music.play()
 
-    story = True # SET TO FALSE FOR NO STORY
+    story = False # SET TO FALSE FOR NO STORY
     
     playMusic("IntroSong.mp3")
     pygame.mixer.Sound("munch.mp3").play()
@@ -80,13 +80,13 @@ class main:
     
     background = Background(screen,SCREEN_WIDTH,SCREEN_HEIGHT)
 
-    gobbo = Goblin(screen,background)
+    #Pgobbo = Goblin(screen,background)
     
     player1 = Player(screen,background,5)
     keyHandler = KeyHandler(player1,background)
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
-    entityHandler.addEntity(gobbo)
+    #entityHandler.addEntity(gobbo)
     
     #bg = pygame.image.load("background.png")
 
