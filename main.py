@@ -41,7 +41,7 @@ class main:
     mouse_down = False
     running = True
     while running:
-        dt = clock.tick(30)
+        dt = clock.tick(60)
         dt = dt/40
 
 

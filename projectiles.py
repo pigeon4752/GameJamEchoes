@@ -105,7 +105,7 @@ class Projectile():
             #                             # Ball is bouncing off the inside of the rect
             #     self.deflect(self.position.x, tile.rect.center[0], self.position.y, tile.rect.center[1],
             #                 self.velocity.x, 0, self.velocity.y, 0)
-            
+            # self.background.addLight(self.position.x,self.position.y,50-(self.bounces*10))
             self.bounces+=1
                 
 
@@ -118,8 +118,8 @@ class Projectile():
         self.position.x += (self.velocity.x/2)
         self.position.y += (self.velocity.y/2)
         self.checkCollision()   
-        # if((self.velocity.x<3 and self.velocity.x>-3 )and (self.velocity.y<3 and self.velocity.y>-3)):
-        #     return True
+        if((self.velocity.x<3 and self.velocity.x>-3 )and (self.velocity.y<3 and self.velocity.y>-3)):
+            return True
         return False
 
     def draw(self):
