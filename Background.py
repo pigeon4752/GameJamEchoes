@@ -3,6 +3,8 @@ import numpy as np
 from Tile import tile
 from PIL import Image
 import math
+import time
+import random
 
 class Background:
     
@@ -21,9 +23,25 @@ class Background:
         #self.fogSurfaces.append(fogSurface)
         self.createNewBackground()
         
-    
 
     
+    def addLight(self, x, y, size, intensity):
+        radius = size / 2
+        center = (x + radius, y + radius)
+        
+        # Iterate over the array of tiles
+        for tile in self.tileArray:
+            # Get the center of the tile's rect
+            tile_center = tile.rect.center
+            
+            # Calculate the distance between the tile's center and the circular area's center
+            distance_x = abs(tile_center[0] - center[0])
+            distance_y = abs(tile_center[1] - center[1])
+            
+            # Check if the tile is inside the circular area
+            if distance_x <= radius + tile.rect.width / 2 and distance_y <= radius + tile.rect.height / 2:
+                # Increase the alpha value by the specified intensity
+                self.increaseTileBrightness(tile, intensity)
    
         
         
@@ -32,11 +50,10 @@ class Background:
 
     def createNewBackground(self):
         #rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
-        
         #img = Image.open('file.bmp')
         self.map = np.array(Image.open('oldmap32.bmp'))
         dimension = int(math.sqrt(self.map.size))
-        cobble = pygame.image.load("cobble.png")
+        
         fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
 
         tileSize = self.screen.get_height()/dimension
@@ -47,6 +64,17 @@ class Background:
                 
                 if tileValue == 0:
                     tileRect = pygame.Rect(x * tileSize, y * tileSize, tileSize, tileSize)
+                    randomNum = random.randint(0,100)
+                    if(randomNum<=80):
+                        cobble = pygame.image.load("cobble.png")
+                    elif(randomNum<=89):
+                        cobble = pygame.image.load("cobble2.png")
+                    elif(randomNum<=93):
+                        cobble = pygame.image.load("cobble3.png")
+                    elif(randomNum<=98):
+                        cobble = pygame.image.load("cobble4.png")
+                    else:
+                        cobble = pygame.image.load("cobble5.png")
                     tileObject = tile(cobble,tileRect,255,x,y)
                     #pygame.draw.rect(self.screen, (0, 0, 0), tileRect)
                     #self.screen.blit(cobble, tileRect.topleft)
@@ -58,30 +86,37 @@ class Background:
        
     
     def updateMap(self):
-        fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
         for tileObject in self.tileArray: 
-            #pygame.draw.rect(self.screen,"black",rect[1])
-            
-            if (tileObject.shadow!=255):
+            self.decreaseTileBrightness(tileObject,2)
+            tileObject.image.set_alpha(tileObject.shadow)
+            if (tileObject.shadow!=0):
                 self.screen.blit(tileObject.image, tileObject.rect.topleft)
-                fogSurface.fill((0, 0, 0, tileObject.shadow))
-                self.screen.blit(fogSurface,(tileObject.rect.topleft),tileObject.rect)
-        self.revertBrightness()
+
+
+    def lightAllTiles(self):
+        for tileObject in self.tileArray:
+            self.increaseTileBrightness(tileObject,20)
+            self.increaseTileBrightness(tileObject,20)
 
     def decreaseBrightness(self):
         for tileObject in self.tileArray:
-            if tileObject.shadow>50:
-                tileObject.shadow-=50
-            else:
-                tileObject.shadow = 0
+            self.decreaseTileBrightness(tileObject,1)
+            
+
+    def increaseTileBrightness(self,tile,amount):
+        tile.shadow+=amount
+        if tile.shadow>255:
+            tile.shadow=255
+    
+    def decreaseTileBrightness(self,tile,amount):
+        tile.shadow-=amount
+        if tile.shadow<0:
+            tile.shadow=0
             
     def revertBrightness(self):
         for tileObject in self.tileArray:
-            if tileObject.shadow!=255:
-                if (tileObject.shadow+20>255):
-                    tileObject.shadow = 255
-                else:
-                    tileObject.shadow+=20
+            self.decreaseTileBrightness(tileObject)
+        # time.sleep(0.05)  # Delay of 0.05 seconds (adjust as needed)
             
     
     def addFog(self):

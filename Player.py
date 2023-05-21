@@ -5,8 +5,8 @@ from projectileHandler import ProjectileHandler
 from AnimationHandler import AnimationHandler
 
 class Player(Sprite):
-    moveSpeed = 2
-    gravity = 1
+    moveSpeed = 1.5
+    gravity = 1.5
 
     def update(self,dt):
         self.changeYVelocity(self.gravity*dt)

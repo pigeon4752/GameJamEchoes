@@ -31,7 +31,10 @@ class Projectile():
         p1FinalMomentum = math.sqrt(p1FinalTrajectory[0] * p1FinalTrajectory[0] + p1FinalTrajectory[1] * p1FinalTrajectory[1])
         p2FinalMomentum = math.sqrt(p2FinalTrajectory[0] * p2FinalTrajectory[0] + p2FinalTrajectory[1] * p2FinalTrajectory[1])
         # // Scale the resultant trajectories if we've accidentally broken the laws of physics.
-        mag = ((p1InitialMomentum + p2InitialMomentum) / (p1FinalMomentum + p2FinalMomentum))*1.6
+        if (p1FinalMomentum + p2FinalMomentum) != 0:
+            mag = ((p1InitialMomentum + p2InitialMomentum) / (p1FinalMomentum + p2FinalMomentum))*0.9
+        else:
+            mag = ((p1InitialMomentum + p2InitialMomentum) / ((p1FinalMomentum + p2FinalMomentum)+0.01))*0.9
         # // Calculate the final x and y speed settings for the two balls after collision.
         xSpeed1 = p1FinalTrajectory[0] * mag
         ySpeed1 = p1FinalTrajectory[1] * mag
@@ -66,29 +69,62 @@ class Projectile():
     def checkCollision(self):
         tiles = self.background.getTileArray()
         for tile in tiles:
-            if tile.rect.colliderect(pygame.Rect(self.position.x,self.position.y,10,10)):
+            if tile.rect.colliderect(pygame.Rect(self.position.x,self.position.y,self.radius,self.radius)):
                 self.draw()
-                self.deflect(self.position.x,tile.rect.center[0],self.position.y,tile.rect.center[1],self.velocity.x,0,self.velocity.y,0)
+                previousPosition = pygame.Vector2(self.position.x - self.velocity.x, self.position.y - self.velocity.y)
+            
+                # Check if the ball is bouncing off the bottom or the side of the rect
+                if self.position.y - self.radius < tile.rect.bottom and previousPosition.y - self.radius >= tile.rect.bottom:
+                    # Ball is bouncing off the bottom of the rect
+                    self.deflect(self.position.x,tile.rect.center[0],self.position.y,tile.rect.center[1],self.velocity.x,self.velocity.x,self.velocity.y,0-self.velocity.y)
+                else:
+                    # Ball is bouncing off the side of the rect
+                    self.deflect(self.position.x,tile.rect.center[0],self.position.y,tile.rect.center[1],self.velocity.x,0-self.velocity.x,self.velocity.y,self.velocity.y)
+                
+                self.background.addLight(self.position.x-self.radius,self.position.y-self.radius,100,200-(self.bounces*20))
                 self.bounces+=1
                 
 
-    def update(self):    
-        self.position.x += self.velocity.x
-        self.position.y += self.velocity.y
+    def update(self):
+        # self.previousPosition = self.position    
+        self.position.x += (self.velocity.x/2)
+        self.position.y += (self.velocity.y/2)
         self.checkCollision()
+        # self.previousPosition = self.position
+        self.position.x += (self.velocity.x/2)
+        self.position.y += (self.velocity.y/2)
+        self.checkCollision()   
         if((self.velocity.x<3 and self.velocity.x>-3 )and (self.velocity.y<3 and self.velocity.y>-3)):
             return True
         return False
 
     def draw(self):
-        pygame.draw.circle(self.screen,"white",(self.position.x,self.position.y),5)
+        # pygame.draw.circle(self.screen,"white",(self.position.x,self.position.y),self.radius)
+        color = (255, 255, 255)  # White color (you can customize this)
+        radius = self.radius # Radius of the arc
+        arc_angle = 90  # Angle of the arc (in degrees)
+        bend_angle = 45  # Angle by which the arc is bent (in degrees)
+        width = 1  # Line width of the arc (in pixels)
+
+        start_angle = math.radians(bend_angle)  # Convert bend angle to radians
+        end_angle = start_angle + math.radians(arc_angle)  # Calculate end angle
+
+        # Calculate the position of the arc's center
+        center_x = self.position.x + radius * math.cos(start_angle)
+        center_y = self.position.y - radius * math.sin(start_angle)
+        center = (int(center_x), int(center_y))
+
+        pygame.draw.arc(self.screen, color, (center_x - radius, center_y - radius, radius * 2, radius * 2), start_angle, end_angle, width)
+
         
 
     def __init__(self, x, y,xVelocity,yVelocity,background,screen):
         self.position = pygame.Vector2(x,y)
+        self.previousPosition = pygame.Vector2(x,y)
         self.velocity = pygame.Vector2(xVelocity,yVelocity)
         self.projectileRectangle = pygame.Rect(x, y, 3, 6)
         self.background = background
         self.screen = screen
         self.bounces=0
+        self.radius=5
     
