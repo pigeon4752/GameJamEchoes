@@ -26,7 +26,7 @@ class main:
         pygame.display.set_icon(icon_image)
         
         
-        self.story(pygame.time.Clock(),story=True)
+        self.story(pygame.time.Clock(),story=False)
         clock = pygame.time.Clock()
         background = Background(self.screen,SCREEN_WIDTH,SCREEN_HEIGHT)
  
@@ -60,6 +60,9 @@ class main:
             entityHandler.updateEntities(dt) # DRAW ALL HITBOXES
             projectileHandler.update()
             background.updateMap() # Update light
+
+            if 770<background.player.position.y<780:
+                print("pi")
             if background.player.dead:
                 entityHandler.resetEntities(dt)
 

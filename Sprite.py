@@ -34,6 +34,17 @@ class Sprite:
     def updatePosition(self,dt):
         xVel = self.velocity.x*dt
         yVel = self.velocity.y*dt
+        if(xVel>self.MAX_X_VELOCITY):
+            xVel=self.MAX_X_VELOCITY
+        elif(xVel<0-self.MAX_X_VELOCITY):
+            xVel = 0-self.MAX_X_VELOCITY
+
+        if(yVel>self.MAX_Y_VELOCITY):
+            yVel=self.MAX_Y_VELOCITY
+        elif(yVel<0-self.MAX_Y_VELOCITY):
+            yVel = 0-self.MAX_Y_VELOCITY
+
+            
         if self.velocity.x>0:
             self.velocity.x = self.velocity.x-0.8
             if self.velocity.x < 0:
@@ -53,7 +64,7 @@ class Sprite:
                 self.velocity.y=0
 
         if (0 > (self.position.x + xVel)):
-            self.position.x = 0
+            #self.position.x = 0
             self.velocity.x = 0
         elif (self.position.x+self.playerRectangle.width + xVel) > 800:
             self.position.x=800-self.playerRectangle.width
@@ -71,10 +82,7 @@ class Sprite:
             self.position.y=800-self.playerRectangle.height
             self.velocity.y=0
         else:
-            if(yVel>self.MAX_Y_VELOCITY):
-                yVel=self.MAX_Y_VELOCITY
-            elif(yVel<0-self.MAX_Y_VELOCITY):
-                yVel = 0-self.MAX_Y_VELOCITY
+            
             self.position.y+=yVel
 
         self.background.handlePlayerCollision(self,self.position.x-xVel,self.position.y-yVel)
