@@ -65,7 +65,7 @@ class Background:
                      
                     randomNum = random.randint(0,100)
                     randomNum2 = random.randint(0,100)
-                    if 
+                    if randomNum2<97:
                         if(randomNum<=60):
                             cobble = pygame.image.load("cobble.png")
                         elif(randomNum<=79):
@@ -76,9 +76,18 @@ class Background:
                             cobble = pygame.image.load("cobble4.png")
                         elif(randomNum<= 91):
                             cobble = pygame.image.load("cobble5.png")
-                        else(randomNum<= 95):
-                            cobble = pygame.image.load("cobble5.png")
-                    tileObject = tile(cobble,tileRect,255,x,y)
+                        tileObject = tile(cobble,tileRect,255,x,y)
+                        
+                    else:
+                        if (randomNum<= 50):
+                            cobble = pygame.image.load("lava.png")
+                            tileObject = tile(cobble,tileRect,255,x,y,damaging =True,damageRate=100,glows=True)
+                        else:
+                            cobble = pygame.image.load("goblinPit.png")
+                            tileObject = tile(cobble,tileRect,255,x,y,damaging =True,damageRate=10)
+
+
+                    
                     #pygame.draw.rect(self.screen, (0, 0, 0), tileRect)
                     #self.screen.blit(cobble, tileRect.topleft)
                     self.tileArray.append(tileObject)
@@ -248,6 +257,8 @@ class Background:
                                 player.velocity.x = 0
                     elif previousY + player.playerRectangle.height <= rect.top:
                         # Player was above the platform in the previous frame
+                        if tile.damaging:
+                            player.
                         if playerBottom > rect.top:  # Added check
                             player.position.y = rect.top - player.playerRectangle.height
                             player.velocity.y = 0

@@ -25,6 +25,7 @@ class Sprite:
         self.isGrounded()
         self.rendered = rendered
         self.health = health
+        self.dead = False
         self.player_facing = 'right'
         # self.gun = Gun(self.playerRectangle)
 
@@ -101,9 +102,16 @@ class Sprite:
     
     def update(self,dt):
         self.updatePosition(dt)
-        
         #print(self.coordinates)
         self.playerRectangle.topleft = (self.position.x,self.position.y)
+    
+    def takeDamage(self,damage):
+        self.health -= damage
+        if self.health>0:
+            self.dead = True
+        
+
+
     
     def updateSprite(self, animObjs):
         if self.velocity.x > 0:

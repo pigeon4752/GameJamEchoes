@@ -22,6 +22,14 @@ class Player(Sprite):
     def passAngleToGun(self,angle):
         self.gun.setAngle(angle)
 
+
+    def takeDamage(self, damage):
+        ###Play sound
+        pygame.mixer.Sound("munch.mp3").play()
+        super().takeDamage(damage)
+        if self.dead:
+            ##Play dead noises
+
     def updateSprite(self):
         self.AnimationHandler.moveConductor.play()
         super().updateSprite(self.AnimationHandler.animObjs)
