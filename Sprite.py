@@ -107,7 +107,7 @@ class Sprite:
     
     def takeDamage(self,damage):
         self.health -= damage
-        if self.health>0:
+        if self.health<0:
             self.dead = True
         
 

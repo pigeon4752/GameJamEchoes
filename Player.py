@@ -26,10 +26,10 @@ class Player(Sprite):
 
     def takeDamage(self, damage):
         ###Play sound
-        pygame.mixer.Sound("munch.mp3").play()
+        pygame.mixer.Sound("ow.mp3").play()
         super().takeDamage(damage)
         if self.dead:
-            pass
+            pygame.mixer.Sound("giggle.mp3").play()
             ##Play dead noises
 
     def updateSprite(self):
