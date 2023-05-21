@@ -36,7 +36,7 @@ class main:
         pygame.mixer.music.set_endevent(pygame.USEREVENT+1)
         pygame.mixer.music.play()
 
-    story = False # SET TO FALSE FOR NO STORY
+    story = True # SET TO FALSE FOR NO STORY
     playMusic("IntroSong.mp3")
     pygame.mixer.Sound("munch.mp3").play()
     storyImage = pygame.image.load(os.path.join("story0.png"))
@@ -126,8 +126,19 @@ class main:
         entityHandler.updateEntities(dt) # DRAW ALL HITBOXES
         projectileHandler.update()
         background.updateMap() # Update light
+        running = not player1.checkDead()
 
         pygame.display.flip()
+    storyImage = pygame.transform.scale(pygame.image.load(os.path.join("gameOver.png")),(768,768))
+    end=255
+    while end > 0:
+        pygame.Surface.fill(screen,(0,0,0))
+        screen.blit(storyImage,(0,0))
+        storyImage.set_alpha(end)
+        pygame.display.flip()
+        end-=1
+        if end<0:
+            end=0       
         
 
 
