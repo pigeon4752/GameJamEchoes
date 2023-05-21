@@ -7,8 +7,11 @@ class Player(Sprite):
 
     def update(self,dt):
         self.changeYVelocity(self.gravity*dt)
+        self.background.modifyCoordinateMap(self.coordinates,self.calculateCoordinates(self.position.x, self.position.y),2)
+        #print(self.coordinates)
+        #print(self.calculateCoordinates(self.coordinates.x, self.coordinates.y)
         self.coordinates = self.calculateCoordinates(self.position.x, self.position.y)
-        self.background.modifyCoordinateMap(self.coordinates,self.calculateCoordinates(self.coordinates.x, self.coordinates.y),2)
+        
         # self.updatePosition()
         super().update(dt)
 

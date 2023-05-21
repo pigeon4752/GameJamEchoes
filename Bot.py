@@ -9,6 +9,8 @@ class Bot(Sprite):
         self.changeYVelocity(self.gravity*dt)
         self.background.modifyCoordinateMap(self.coordinates,self.calculateCoordinates(self.coordinates.x, self.coordinates.y),3)
         # self.updatePosition()
+        self.coordinates = self.calculateCoordinates(self.position.x, self.position.y)
         super().update(dt)
+
         
     

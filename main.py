@@ -22,12 +22,12 @@ class main:
     player1 = Player(screen,background,5)
     mouseHandler = MouseHandler()
     
-    #gobbo = Goblin(screen,background)
+    gobbo = Goblin(screen,background)
     
     keyHandler = KeyHandler(player1,background)
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
-    #entityHandler.addEntity(gobbo)
+    entityHandler.addEntity(gobbo)
     bg = pygame.image.load("background.png")
 
     projectileHandler = ProjectileHandler()
@@ -41,7 +41,7 @@ class main:
     mouse_down = False
     running = True
     while running:
-        dt = clock.tick(30)
+        dt = clock.tick(40)
         dt = dt/40
 
         angle = mousehandler.mouse_angle(pygame.mouse.get_pos(), player1.position)

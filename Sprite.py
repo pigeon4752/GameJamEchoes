@@ -2,6 +2,7 @@ import pygame
 import Background as background
 import math
 from gun import Gun
+from Vector import Vector
 
 class Sprite:
 
@@ -94,8 +95,7 @@ class Sprite:
         return(self.background.checkGrounded(self.playerRectangle))
 
     def calculateCoordinates(self,x,y):
-        
-        return(pygame.Vector2((round(self.position.x/self.background.tileSize),round(self.position.y/self.background.tileSize))))
+        return(Vector(int(self.position.x/self.background.tileSize),round(self.position.y/self.background.tileSize)))
     
     def update(self,dt):
         self.updatePosition(dt)

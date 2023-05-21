@@ -27,7 +27,7 @@ class Background:
         #rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
         
         #img = Image.open('file.bmp')
-        self.map = np.array(Image.open('map.bmp'))
+        self.map = np.array(Image.open('oldmap32.bmp'))
         self.dimension = int(math.sqrt(self.map.size))
         cobble = pygame.image.load("cobble.png")
         fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
@@ -53,7 +53,7 @@ class Background:
     def updateMap(self):
         fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
         for tileObject in self.tileArray: 
-            #pygame.draw.rect(self.screen,"black",rect[1])
+            
             
             if (tileObject.shadow!=255):
                 self.screen.blit(tileObject.image, tileObject.rect.topleft)
@@ -62,12 +62,40 @@ class Background:
         self.revertBrightness()
 
     def modifyCoordinateMap(self,oldCoordinates,newCoordinates, representation):
+        #print(self.map[int(oldCoordinates.x),int(oldCoordinates.y)])
+        #if self.map[int(newCoordinates.x)][int(newCoordinates.y)] != 0: 
+        if oldCoordinates.x != newCoordinates.x or oldCoordinates.y != newCoordinates.y:
+            self.map[oldCoordinates.x-1,oldCoordinates.y-1] = 1
+            self.map[newCoordinates.x-1,newCoordinates.y-1] = representation
+       
+        #print(self.map[int(oldCoordinates.x),int(oldCoordinates.y)])
+    
+    def getTile(self,x,y):
+        return(self.hashMap[x,"_",y])
+
+    def getTilesAround(self,position):
+        arr = []
         
-        self.map[int(oldCoordinates.y)][int(oldCoordinates.x)] = 1
-        self.map[int(newCoordinates.y)][int(newCoordinates.x)] = representation
+        #for row in self.map:
+        #jjjjjjjjjjjjjjjjjjjj    print(row)
+        #print(position.x,"X")
+        #print(position.y,"Y")
+        for x in [-1,0,1]:
+            for y in [-1,0,1]:
+                
+                if (-1<position.x+x<32) and (-1<position.y+y<32):
+                    if self.map[position.x+x,position.y+y] == 0 :
+                        arr.append(self.getTile(position.x+x,position.y+y))  
+
+        
+        return(arr)
+
+                
+
+    
 
     def printMap(self):
-        print("/n")
+        print("\n")
         for row in self.map:
             print(row)
 
@@ -112,8 +140,9 @@ class Background:
         playerRight = player.position.x+player.playerRectangle.width
         playerBottom = player.position.y+player.playerRectangle.height
         playerLeft = player.position.x
-
-        for tile in self.tileArray:
+        #tiles = self.getTilesAround(player.coordinates)
+        tiles = self.getTileArray()
+        for tile in tiles:
             rect=tile.rect
             if playerRight > rect.left and playerLeft < rect.right:
                 if playerBottom > rect.top and playerTop < rect.bottom:
