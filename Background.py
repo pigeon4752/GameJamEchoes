@@ -5,6 +5,7 @@ from PIL import Image
 import math
 import time
 import random
+from Player import Player
 
 class Background:
     
@@ -15,7 +16,7 @@ class Background:
         self.screenHeight = SCREEN_HEIGHT
         self.screenWidth = SCREEN_WIDTH
         self.hashMap = {}
-        self.createNewBackground()
+        self.entityArray  = self.createNewBackground()
         
 
     
@@ -47,51 +48,92 @@ class Background:
     def createNewBackground(self):
         #rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
         #img = Image.open('file.bmp')
-        self.map = np.array(Image.open('oldmap32.bmp'))
+        #flipped_vertical = np.flip(arr, axis=0)
+        self.map = np.flip(np.rot90((np.array(Image.open('mapColour.bmp')))),axis = 0)
         
         self.dimension = int(math.sqrt(self.map.size))
         
         fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
 
         self.tileSize = self.screen.get_height()/self.dimension
+        entityArray = []
         
         for x in range(int (self.map.size/self.dimension)):
             for y in range(int (self.map.size/self.dimension)):
                 tileValue = self.map[x][y]
+                #print(tileValue)
 
-                
+                tileRect = pygame.Rect(x * self.tileSize, y * self.tileSize, self.tileSize, self.tileSize)
                 if tileValue == 0:
-                    tileRect = pygame.Rect(x * self.tileSize, y * self.tileSize, self.tileSize, self.tileSize)
+                    
                      
                     randomNum = random.randint(0,100)
-                    randomNum2 = random.randint(0,100)
-                    if randomNum2<97:
-                        if(randomNum<=60):
-                            cobble = pygame.image.load("cobble.png")
-                        elif(randomNum<=79):
-                            cobble = pygame.image.load("cobble2.png")
-                        elif(randomNum<=83):
-                            cobble = pygame.image.load("cobble3.png")
-                        elif(randomNum<=88):
-                            cobble = pygame.image.load("cobble4.png")
-                        else:
-                            cobble = pygame.image.load("cobble5.png")
-                        tileObject = tile(cobble,tileRect,255,x,y)
-                        
+                    
+                   
+                    if(randomNum<=60):
+                        image = pygame.image.load("cobble.png")
+                    elif(randomNum<=79):
+                        image = pygame.image.load("cobble.png")
+                    elif(randomNum<=83):
+                        image = pygame.image.load("cobble.png")
+                    elif(randomNum<=88):
+                        image = pygame.image.load("cobble.png")
                     else:
-                        if (randomNum<= 50):
-                            cobble = pygame.image.load("lava.png")
-                            tileObject = tile(cobble,tileRect,255,x,y,damaging =True,damageRate=100)
-                        else:
-                            cobble = pygame.image.load("goblinPit.png")
-                            tileObject = tile(cobble,tileRect,255,x,y,damaging =True,damageRate=10)
+                        image = pygame.image.load("cobble.png")
+                    tileObject = tile(image,tileRect,255,x,y)
+                    self.tileArray.append(tileObject)
+                    self.hashMap[tileObject.key] = tileObject
+                    
+                        
+                elif tileValue == 1:#Everything not a tile:
+                    pass
+                elif tileValue == 2:#MINORS
+                    pass
+                    #image = pygame.image.load("lava.png")
+                    #tileObject = tile(image,tileRect,255,x,y,damaging =True,damageRate=100)
+                elif tileValue == 3:#Lava
+                    image = pygame.image.load("lava.png")
+                    tileObject = tile(image,tileRect,255,x,y,damaging =True,damageRate=100)
+                    self.tileArray.append(tileObject)
+                    self.hashMap[tileObject.key] = tileObject
+                elif tileValue == 4:##Goblin pit 
+                    image = pygame.image.load("goblinPit.png")
+                    tileObject = tile(image,tileRect,255,x,y,damaging =True,damageRate=100)
+                    self.tileArray.append(tileObject)
+                    self.hashMap[tileObject.key] = tileObject
+                elif tileValue == 5:#Goblins
+                    pass
+                    #image = pygame.image.load("lava.png")
+                    #tileObject = tile(image,tileRect,255,x,y,damaging =True,damageRate=100)
+                    #self.tileArray.append(tileObject)
+                    #self.hashMap[tileObject.key] = tileObject
+                elif tileValue == 6:#humans
+                    
+                   
+                    self.player = Player(self.screen,self,2,x= x*self.tileSize,y = y*self.tileSize)
+                    entityArray.append(self.player)
+                    
+                    
+                    pass
+
+                    #image = pygame.image.load("lava.png")
+                    #tileObject = tile(image,tileRect,255,x,y,damaging =True,damageRate=100)
+                else:
+                    pass
+                    #print(tileValue)
+                
+                    #if (randomNum<= 50):
+                    
+                    #else:
+                    #    image = pygame.image.load("goblinPit.png")
+                    #    tileObject = tile(image,tileRect,255,x,y,damaging =True,damageRate=10)
 
 
                     
                     #pygame.draw.rect(self.screen, (0, 0, 0), tileRect)
                     #self.screen.blit(cobble, tileRect.topleft)
-                    self.tileArray.append(tileObject)
-                    self.hashMap[tileObject.key] = tileObject
+        return(entityArray)        
+                
                     
         
         

@@ -13,11 +13,11 @@ class Sprite:
     MAX_X_VELOCITY = 8
     
     gravity = 1
-    def __init__(self,screen,background,width=24,size= 24,colour="red",spriteImage = "player.png",rendered = False,health = 100):
+    def __init__(self,screen,background,position,width=24,size= 24,colour="red",spriteImage = "player.png",rendered = False,health = 100):
         self.background = background
         self.screen = screen
         self.spriteImage =  pygame.image.load(spriteImage)
-        self.position = pygame.Vector2(400,100)
+        self.position = position
         self.coordinates = self.calculateCoordinates(self.position.x, self.position.y)
         self.velocity = pygame.Vector2(0,0)
         self.playerRectangle = pygame.Rect(self.position.x,self.position.y,width,size)
@@ -98,7 +98,7 @@ class Sprite:
         return(self.background.checkGrounded(self.playerRectangle))
 
     def calculateCoordinates(self,x,y):
-        return(Vector(round(self.position.x/self.background.tileSize),int(self.position.y/self.background.tileSize)))
+        return(Vector(int(self.position.y/self.background.tileSize),round(self.position.x/self.background.tileSize)))
     
     def update(self,dt):
         self.updatePosition(dt)
