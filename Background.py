@@ -15,11 +15,6 @@ class Background:
         self.screenHeight = SCREEN_HEIGHT
         self.screenWidth = SCREEN_WIDTH
         self.hashMap = {}
-        #fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
-        #fogSurface.fill((0, 0, 0, 100))
-        
-        
-        #self.fogSurfaces.append(fogSurface)
         self.createNewBackground()
         
 
@@ -41,6 +36,8 @@ class Background:
             if distance_x <= radius + tile.rect.width / 2 and distance_y <= radius + tile.rect.height / 2:
                 # Increase the alpha value by the specified intensity
                 self.increaseTileBrightness(tile, intensity)
+    
+    
    
         
         
@@ -64,18 +61,23 @@ class Background:
 
                 
                 if tileValue == 0:
-                    tileRect = pygame.Rect(x * tileSize, y * tileSize, tileSize, tileSize)
+                    tileRect = pygame.Rect(x * self.tileSize, y * self.tileSize, self.tileSize, self.tileSize)
+                     
                     randomNum = random.randint(0,100)
-                    if(randomNum<=80):
-                        cobble = pygame.image.load("cobble.png")
-                    elif(randomNum<=89):
-                        cobble = pygame.image.load("cobble2.png")
-                    elif(randomNum<=93):
-                        cobble = pygame.image.load("cobble3.png")
-                    elif(randomNum<=98):
-                        cobble = pygame.image.load("cobble4.png")
-                    else:
-                        cobble = pygame.image.load("cobble5.png")
+                    randomNum2 = random.randint(0,100)
+                    if 
+                        if(randomNum<=60):
+                            cobble = pygame.image.load("cobble.png")
+                        elif(randomNum<=79):
+                            cobble = pygame.image.load("cobble2.png")
+                        elif(randomNum<=83):
+                            cobble = pygame.image.load("cobble3.png")
+                        elif(randomNum<=88):
+                            cobble = pygame.image.load("cobble4.png")
+                        elif(randomNum<= 91):
+                            cobble = pygame.image.load("cobble5.png")
+                        else(randomNum<= 95):
+                            cobble = pygame.image.load("cobble5.png")
                     tileObject = tile(cobble,tileRect,255,x,y)
                     #pygame.draw.rect(self.screen, (0, 0, 0), tileRect)
                     #self.screen.blit(cobble, tileRect.topleft)
@@ -89,6 +91,8 @@ class Background:
     def updateMap(self):
         for tileObject in self.tileArray: 
             self.decreaseTileBrightness(tileObject,2)
+            if tile.glows:
+                self.addLight(tile.x, tile.y, tile.rect.width, 2)
             tileObject.image.set_alpha(tileObject.shadow)
             if (tileObject.shadow!=0):
                 self.screen.blit(tileObject.image, tileObject.rect.topleft)
@@ -189,9 +193,10 @@ class Background:
             tile.shadow=255
     
     def decreaseTileBrightness(self,tile,amount):
-        tile.shadow-=amount
-        if tile.shadow<0:
-            tile.shadow=0
+        if not tile.glows:
+            tile.shadow-=amount
+            if tile.shadow<0:
+                tile.shadow=0
             
     def revertBrightness(self):
         for tileObject in self.tileArray:
