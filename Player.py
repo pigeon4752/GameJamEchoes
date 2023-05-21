@@ -11,12 +11,26 @@ class Player(Sprite):
 
     def update(self,dt):
         self.changeYVelocity(self.gravity*dt)
+        self.background.modifyCoordinateMap(self.coordinates,self.calculateCoordinates(self.position.x, self.position.y),2)
+        #print(self.coordinates)
+        #print(self.calculateCoordinates(self.coordinates.x, self.coordinates.y)
+        self.coordinates = self.calculateCoordinates(self.position.x, self.position.y)
+        
         # self.updatePosition()
         super().update(dt)
         self.background.addLight(self.position.x-20,self.position.y,50,10)
 
     def passAngleToGun(self,angle):
         self.gun.setAngle(angle)
+
+
+    def takeDamage(self, damage):
+        ###Play sound
+        pygame.mixer.Sound("ow.mp3").play()
+        super().takeDamage(damage)
+        if self.dead:
+            pygame.mixer.Sound("giggle.mp3").play()
+            ##Play dead noises
 
     def updateSprite(self):
         self.AnimationHandler.moveConductor.play()

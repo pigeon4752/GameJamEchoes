@@ -11,16 +11,10 @@ class Background:
     def __init__(self,screen,SCREEN_WIDTH,SCREEN_HEIGHT):
         self.screen = screen
         self.tileArray = []
-        self.polyArray = []
         self.fogSurfaces = []
         self.screenHeight = SCREEN_HEIGHT
         self.screenWidth = SCREEN_WIDTH
         self.hashMap = {}
-        #fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
-        #fogSurface.fill((0, 0, 0, 100))
-        
-        
-        #self.fogSurfaces.append(fogSurface)
         self.createNewBackground()
         
 
@@ -42,6 +36,8 @@ class Background:
             if distance_x <= radius + tile.rect.width / 2 and distance_y <= radius + tile.rect.height / 2:
                 # Increase the alpha value by the specified intensity
                 self.increaseTileBrightness(tile, intensity)
+    
+    
    
         
         
@@ -52,30 +48,46 @@ class Background:
         #rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
         #img = Image.open('file.bmp')
         self.map = np.array(Image.open('oldmap32.bmp'))
-        dimension = int(math.sqrt(self.map.size))
+        
+        self.dimension = int(math.sqrt(self.map.size))
         
         fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
 
-        tileSize = self.screen.get_height()/dimension
+        self.tileSize = self.screen.get_height()/self.dimension
         
-        for x in range(int (self.map.size/dimension)):
-            for y in range(int (self.map.size/dimension)):
+        for x in range(int (self.map.size/self.dimension)):
+            for y in range(int (self.map.size/self.dimension)):
                 tileValue = self.map[x][y]
+
                 
                 if tileValue == 0:
-                    tileRect = pygame.Rect(x * tileSize, y * tileSize, tileSize, tileSize)
+                    tileRect = pygame.Rect(x * self.tileSize, y * self.tileSize, self.tileSize, self.tileSize)
+                     
                     randomNum = random.randint(0,100)
-                    if(randomNum<=80):
-                        cobble = pygame.image.load("cobble.png")
-                    elif(randomNum<=89):
-                        cobble = pygame.image.load("cobble2.png")
-                    elif(randomNum<=93):
-                        cobble = pygame.image.load("cobble3.png")
-                    elif(randomNum<=98):
-                        cobble = pygame.image.load("cobble4.png")
+                    randomNum2 = random.randint(0,100)
+                    if randomNum2<97:
+                        if(randomNum<=60):
+                            cobble = pygame.image.load("cobble.png")
+                        elif(randomNum<=79):
+                            cobble = pygame.image.load("cobble2.png")
+                        elif(randomNum<=83):
+                            cobble = pygame.image.load("cobble3.png")
+                        elif(randomNum<=88):
+                            cobble = pygame.image.load("cobble4.png")
+                        else:
+                            cobble = pygame.image.load("cobble5.png")
+                        tileObject = tile(cobble,tileRect,255,x,y)
+                        
                     else:
-                        cobble = pygame.image.load("cobble5.png")
-                    tileObject = tile(cobble,tileRect,255,x,y)
+                        if (randomNum<= 50):
+                            cobble = pygame.image.load("lava.png")
+                            tileObject = tile(cobble,tileRect,255,x,y,damaging =True,damageRate=100)
+                        else:
+                            cobble = pygame.image.load("goblinPit.png")
+                            tileObject = tile(cobble,tileRect,255,x,y,damaging =True,damageRate=10)
+
+
+                    
                     #pygame.draw.rect(self.screen, (0, 0, 0), tileRect)
                     #self.screen.blit(cobble, tileRect.topleft)
                     self.tileArray.append(tileObject)
@@ -88,6 +100,8 @@ class Background:
     def updateMap(self):
         for tileObject in self.tileArray: 
             self.decreaseTileBrightness(tileObject,2)
+            if tileObject.glows:
+                self.addLight(tileObject.x, tileObject.y, 50, 50)
             tileObject.image.set_alpha(tileObject.shadow)
             if (tileObject.shadow!=0):
                 self.screen.blit(tileObject.image, tileObject.rect.topleft)
@@ -97,6 +111,85 @@ class Background:
         for tileObject in self.tileArray:
             self.increaseTileBrightness(tileObject,20)
             self.increaseTileBrightness(tileObject,20)
+
+    def modifyCoordinateMap(self,oldCoordinates,newCoordinates, representation):
+        #print(self.map[int(oldCoordinates.x),int(oldCoordinates.y)])
+        #if self.map[int(newCoordinates.x)][int(newCoordinates.y)] != 0: 
+        if oldCoordinates.x != newCoordinates.x or oldCoordinates.y != newCoordinates.y:
+            self.map[oldCoordinates.x-1,oldCoordinates.y-1] = 1
+            self.map[newCoordinates.x-1,newCoordinates.y-1] = representation
+       
+        #print(self.map[int(oldCoordinates.x),int(oldCoordinates.y)])
+    
+    def getTile(self,x,y):
+        return(self.hashMap[x,"_",y])
+
+    def getTilesAround(self,position):
+        arr = []
+        
+        #for row in self.map:
+        #jjjjjjjjjjjjjjjjjjjj    print(row)
+        #print(position.x,"X")
+        #print(position.y,"Y")
+        for x in [-1,0,1]:
+            for y in [-1,0,1]:
+                
+                if (-1<position.x+x<32) and (-1<position.y+y<32):
+                    if self.map[position.x+x,position.y+y] == 0 :
+                        arr.append(self.getTile(position.x+x,position.y+y))  
+
+        
+        return(arr)
+
+                
+
+    
+
+    def printMap(self):
+        print("\n")
+        for row in self.map:
+            print(row)
+
+
+    def modifyCoordinateMap(self,oldCoordinates,newCoordinates, representation):
+        #print(self.map[int(oldCoordinates.x),int(oldCoordinates.y)])
+        #if self.map[int(newCoordinates.x)][int(newCoordinates.y)] != 0: 
+        if oldCoordinates.x != newCoordinates.x or oldCoordinates.y != newCoordinates.y:
+
+            self.map[oldCoordinates.x-1,oldCoordinates.y-1] = 1
+            self.map[newCoordinates.x-1,newCoordinates.y-1] = representation
+       
+        #print(self.map[int(oldCoordinates.x),int(oldCoordinates.y)])
+    
+    def getTile(self,x,y):
+        return(self.hashMap[x,"_",y])
+
+    def getTilesAround(self,position):
+        arr = []
+        
+        #for row in self.map:
+        #jjjjjjjjjjjjjjjjjjjj    print(row)
+        #print(position.x,"X")
+        #print(position.y,"Y")
+        for x in [-1,0,1]:
+            for y in [-1,0,1]:
+                
+                if (-1<position.x+x<32) and (-1<position.y+y<32):
+                    if self.map[position.x+x,position.y+y] == 0 :
+                        arr.append(self.getTile(position.x+x,position.y+y))  
+
+        
+        return(arr)
+
+                
+
+    
+
+    def printMap(self):
+        print("\n")
+        for row in self.map:
+            print(row)
+
 
     def decreaseBrightness(self):
         for tileObject in self.tileArray:
@@ -109,9 +202,10 @@ class Background:
             tile.shadow=255
     
     def decreaseTileBrightness(self,tile,amount):
-        tile.shadow-=amount
-        if tile.shadow<0:
-            tile.shadow=0
+        if not tile.glows:
+            tile.shadow-=amount
+            if tile.shadow<0:
+                tile.shadow=0
             
     def revertBrightness(self):
         for tileObject in self.tileArray:
@@ -143,8 +237,9 @@ class Background:
         playerRight = player.position.x+player.playerRectangle.width
         playerBottom = player.position.y+player.playerRectangle.height
         playerLeft = player.position.x
-
-        for tile in self.tileArray:
+        #tiles = self.getTilesAround(player.coordinates)
+        tiles = self.getTileArray()
+        for tile in tiles:
             rect=tile.rect
             if playerRight > rect.left and playerLeft < rect.right:
                 if playerBottom > rect.top and playerTop < rect.bottom:
@@ -162,6 +257,8 @@ class Background:
                                 player.velocity.x = 0
                     elif previousY + player.playerRectangle.height <= rect.top:
                         # Player was above the platform in the previous frame
+                        if tile.damaging:
+                            player.takeDamage(tile.damageRate)
                         if playerBottom > rect.top:  # Added check
                             player.position.y = rect.top - player.playerRectangle.height
                             player.velocity.y = 0

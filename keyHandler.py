@@ -19,6 +19,10 @@ class KeyHandler():
             self.background.lightAllTiles()
         # else:
         #     self.background.decreaseBrightness
+        if keys[pygame.K_l]:
+            self.background.printMap()
+            print(self.player.coordinates.x)
+            print(self.player.coordinates.y)
             
 
     def __init__(self,player,background):

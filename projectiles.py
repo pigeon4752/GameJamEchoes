@@ -1,5 +1,6 @@
 import pygame 
 import math
+from Vector import Vector
 
 class Projectile():
 
@@ -69,6 +70,8 @@ class Projectile():
             
 
     def checkCollision(self):
+        
+        #tiles = self.background.getTilesAround(self.coordinates)
         tiles = self.background.getTileArray()
         for tile in tiles:
             if tile.rect.colliderect(pygame.Rect(self.position.x,self.position.y,self.radius,self.radius)):
@@ -97,6 +100,7 @@ class Projectile():
         # self.previousPosition = self.position
         self.position.x += (self.velocity.x/2)
         self.position.y += (self.velocity.y/2)
+        self.coordinates = Vector(int(self.position.x/self.background.tileSize),round(self.position.y/self.background.tileSize))
         self.checkCollision()   
         if((self.velocity.x<3 and self.velocity.x>-3 )and (self.velocity.y<3 and self.velocity.y>-3)):
             return True

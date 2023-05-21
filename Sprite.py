@@ -1,7 +1,9 @@
 import pygame
 import Background as background
+import math
 
 from gun import Gun 
+from Vector import Vector
 
 class Sprite:
 
@@ -10,18 +12,20 @@ class Sprite:
     MAX_Y_VELOCITY = 21
     MAX_X_VELOCITY = 8
     
-
+    gravity = 1
     def __init__(self,screen,background,width=24,size= 24,colour="red",spriteImage = "player.png",rendered = False,health = 100):
         self.background = background
         self.screen = screen
         self.spriteImage =  pygame.image.load(spriteImage)
         self.position = pygame.Vector2(400,100)
+        self.coordinates = self.calculateCoordinates(self.position.x, self.position.y)
         self.velocity = pygame.Vector2(0,0)
         self.playerRectangle = pygame.Rect(self.position.x,self.position.y,width,size)
         self.colour = colour
         self.isGrounded()
         self.rendered = rendered
         self.health = health
+        self.dead = False
         self.player_facing = 'right'
         # self.gun = Gun(self.playerRectangle)
 
@@ -92,10 +96,22 @@ class Sprite:
     
     def isGrounded(self):
         return(self.background.checkGrounded(self.playerRectangle))
+
+    def calculateCoordinates(self,x,y):
+        return(Vector(round(self.position.x/self.background.tileSize),int(self.position.y/self.background.tileSize)))
     
     def update(self,dt):
         self.updatePosition(dt)
+        #print(self.coordinates)
         self.playerRectangle.topleft = (self.position.x,self.position.y)
+    
+    def takeDamage(self,damage):
+        self.health -= damage
+        if self.health<0:
+            self.dead = True
+        
+
+
     
     def updateSprite(self, animObjs):
         if self.velocity.x > 0:
