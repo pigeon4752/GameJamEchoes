@@ -12,6 +12,7 @@ class Player(Sprite):
         self.changeYVelocity(self.gravity*dt)
         # self.updatePosition()
         super().update(dt)
+        self.background.addLight(self.position.x-20,self.position.y,50,10)
 
     def passAngleToGun(self,angle):
         self.gun.setAngle(angle)
