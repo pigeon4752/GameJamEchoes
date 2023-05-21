@@ -81,32 +81,8 @@ class Projectile():
                     # Ball is bouncing off the side of the rect
                     self.deflect(self.position.x,tile.rect.center[0],self.position.y,tile.rect.center[1],self.velocity.x,0-self.velocity.x,self.velocity.y,self.velocity.y)
                 
-                # Calculate previous position of the ball
-            # previousPosition = pygame.Vector2(self.position.x - self.velocity.x, self.position.y - self.velocity.y)
-                
-            #     # Check if the ball is bouncing off any side of the rect
-            # if self.position.y + self.radius > tile.rect.bottom and previousPosition.y + self.radius <= tile.rect.bottom:
-            #         # Ball is bouncing off the bottom of the rect
-            #     self.velocity.y = 0-self.velocity.y  # Invert the y component of the velocity
-                    
-            # elif self.position.y - self.radius < tile.rect.top and previousPosition.y - self.radius >= tile.rect.top:
-            #         # Ball is bouncing off the top of the rect
-            #     self.velocity.y = 0-self.velocity.y  # Invert the y component of the velocity
-                    
-            # elif self.position.x + self.radius > tile.rect.right and previousPosition.x + self.radius <= tile.rect.right:
-            #         # Ball is bouncing off the right side of the rect
-            #     self.velocity.x = 0-self.velocity.x  # Invert the x component of the velocity
-                    
-            # elif self.position.x - self.radius < tile.rect.left and previousPosition.x - self.radius >= tile.rect.left:
-            #         # Ball is bouncing off the left side of the rect
-            #     self.velocity.x = 0-self.velocity.x  # Invert the x component of the velocity
-                
-            # else:
-            #                             # Ball is bouncing off the inside of the rect
-            #     self.deflect(self.position.x, tile.rect.center[0], self.position.y, tile.rect.center[1],
-            #                 self.velocity.x, 0, self.velocity.y, 0)
-            # self.background.addLight(self.position.x,self.position.y,50-(self.bounces*10))
-            self.bounces+=1
+                self.background.addLight(self.position.x-self.radius,self.position.y-self.radius,100,200-(self.bounces*20))
+                self.bounces+=1
                 
 
     def update(self):
@@ -123,7 +99,23 @@ class Projectile():
         return False
 
     def draw(self):
-        pygame.draw.circle(self.screen,"white",(self.position.x,self.position.y),self.radius)
+        # pygame.draw.circle(self.screen,"white",(self.position.x,self.position.y),self.radius)
+        color = (255, 255, 255)  # White color (you can customize this)
+        radius = self.radius # Radius of the arc
+        arc_angle = 90  # Angle of the arc (in degrees)
+        bend_angle = 45  # Angle by which the arc is bent (in degrees)
+        width = 1  # Line width of the arc (in pixels)
+
+        start_angle = math.radians(bend_angle)  # Convert bend angle to radians
+        end_angle = start_angle + math.radians(arc_angle)  # Calculate end angle
+
+        # Calculate the position of the arc's center
+        center_x = self.position.x + radius * math.cos(start_angle)
+        center_y = self.position.y - radius * math.sin(start_angle)
+        center = (int(center_x), int(center_y))
+
+        pygame.draw.arc(self.screen, color, (center_x - radius, center_y - radius, radius * 2, radius * 2), start_angle, end_angle, width)
+
         
 
     def __init__(self, x, y,xVelocity,yVelocity,background,screen):
