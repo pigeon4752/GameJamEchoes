@@ -68,7 +68,7 @@ class main:
                         end=0               
                 if pressCount >=TOTAL_STORY_FRAMES-1:
                     story = False
-                    pygame.mixer.Sound("swallow.mp3").play()
+                    pygame.mixer.Sound("im_coming_to_get_you.mp3").play()
                 else:
                     pressCount+=1
                     storyImage = pygame.image.load(os.path.join("story" + str(pressCount) + ".png"))
