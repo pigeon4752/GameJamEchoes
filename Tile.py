@@ -4,8 +4,9 @@ class tile:
     
     def __init__(self,image,rect,shadow,x,y):
         self.image = image
+        self.image.convert_alpha()
         self.rect = rect
-        self.shadow = shadow
+        self.shadow = 0
         self.x = x
         self.y = y
         self.key = self.calculateKey(x,y)

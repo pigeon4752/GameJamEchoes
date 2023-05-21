@@ -95,7 +95,7 @@ class Sprite:
         return(self.background.checkGrounded(self.playerRectangle))
 
     def calculateCoordinates(self,x,y):
-        return(Vector(int(self.position.x/self.background.tileSize),round(self.position.y/self.background.tileSize)))
+        return(Vector(round(self.position.x/self.background.tileSize),int(self.position.y/self.background.tileSize)))
     
     def update(self,dt):
         self.updatePosition(dt)

@@ -3,7 +3,7 @@ class Node:
     def __init__(self, position,key, endPosition, count= 0, parentNode = None):
         self.coordinates = position
         if parentNode != None:
-            self.count = parentNode.count
+            self.count = parentNode.count+1
         else:
            self.count = count 
         self.key = key
