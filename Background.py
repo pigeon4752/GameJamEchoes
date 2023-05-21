@@ -4,6 +4,7 @@ from Tile import tile
 from PIL import Image
 import math
 import time
+import random
 
 class Background:
     
@@ -49,11 +50,10 @@ class Background:
 
     def createNewBackground(self):
         #rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
-        
         #img = Image.open('file.bmp')
         self.map = np.array(Image.open('map.bmp'))
         dimension = int(math.sqrt(self.map.size))
-        cobble = pygame.image.load("cobble.png")
+        
         fogSurface = pygame.Surface((self.screenWidth, self.screenHeight), pygame.SRCALPHA)
 
         tileSize = self.screen.get_height()/dimension
@@ -64,6 +64,17 @@ class Background:
                 
                 if tileValue == 0:
                     tileRect = pygame.Rect(x * tileSize, y * tileSize, tileSize, tileSize)
+                    randomNum = random.randint(0,100)
+                    if(randomNum<=80):
+                        cobble = pygame.image.load("cobble.png")
+                    elif(randomNum<=89):
+                        cobble = pygame.image.load("cobble2.png")
+                    elif(randomNum<=93):
+                        cobble = pygame.image.load("cobble3.png")
+                    elif(randomNum<=98):
+                        cobble = pygame.image.load("cobble4.png")
+                    else:
+                        cobble = pygame.image.load("cobble5.png")
                     tileObject = tile(cobble,tileRect,255,x,y)
                     #pygame.draw.rect(self.screen, (0, 0, 0), tileRect)
                     #self.screen.blit(cobble, tileRect.topleft)
