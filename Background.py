@@ -22,8 +22,9 @@ class Background:
         #self.fogSurfaces.append(fogSurface)
         self.createNewBackground()
         
+
     
-    def addLight(self,x,y,size):
+    def addLight(self, x, y, size, intensity):
         radius = size / 2
         center = (x + radius, y + radius)
         
@@ -33,13 +34,13 @@ class Background:
             tile_center = tile.rect.center
             
             # Calculate the distance between the tile's center and the circular area's center
-            distance = math.sqrt((tile_center[0] - center[0]) ** 2 + (tile_center[1] - center[1]) ** 2)
+            distance_x = abs(tile_center[0] - center[0])
+            distance_y = abs(tile_center[1] - center[1])
             
             # Check if the tile is inside the circular area
-            if distance <= radius:
-                # Increase the alpha value by 100
-                tile.shadow -= 100
-        pass
+            if distance_x <= radius + tile.rect.width / 2 and distance_y <= radius + tile.rect.height / 2:
+                # Increase the alpha value by the specified intensity
+                self.increaseTileBrightness(tile, intensity)
    
         
         
@@ -75,7 +76,7 @@ class Background:
     
     def updateMap(self):
         for tileObject in self.tileArray: 
-            self.decreaseTileBrightness(tileObject)
+            self.decreaseTileBrightness(tileObject,2)
             tileObject.image.set_alpha(tileObject.shadow)
             if (tileObject.shadow!=0):
                 self.screen.blit(tileObject.image, tileObject.rect.topleft)
@@ -83,21 +84,21 @@ class Background:
 
     def lightAllTiles(self):
         for tileObject in self.tileArray:
-            self.increaseTileBrightness(tileObject)
-            self.increaseTileBrightness(tileObject)
+            self.increaseTileBrightness(tileObject,20)
+            self.increaseTileBrightness(tileObject,20)
 
     def decreaseBrightness(self):
         for tileObject in self.tileArray:
-            self.decreaseTileBrightness(tileObject)
+            self.decreaseTileBrightness(tileObject,1)
             
 
-    def increaseTileBrightness(self,tile):
-        tile.shadow+=20
+    def increaseTileBrightness(self,tile,amount):
+        tile.shadow+=amount
         if tile.shadow>255:
             tile.shadow=255
     
-    def decreaseTileBrightness(self,tile):
-        tile.shadow-=20
+    def decreaseTileBrightness(self,tile,amount):
+        tile.shadow-=amount
         if tile.shadow<0:
             tile.shadow=0
             
