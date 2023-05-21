@@ -3,6 +3,8 @@ import math
 
 class Projectile():
 
+    boosted = False
+
     def deflect(self,xPosition1,xPosition2,yPosition1,yPosition2,xSpeed1,xSpeed2,ySpeed1,ySpeed2):
 
         # // The position and speed of each of the two balls in the x and y axis before collision.
@@ -82,6 +84,8 @@ class Projectile():
                     self.deflect(self.position.x,tile.rect.center[0],self.position.y,tile.rect.center[1],self.velocity.x,0-self.velocity.x,self.velocity.y,self.velocity.y)
                 
                 self.background.addLight(self.position.x-self.radius,self.position.y-self.radius,100,200-(self.bounces*20))
+                if self.boosted == False:
+                    self.boosted = self.player.addBoost(self.position.x-self.radius,self.position.y-self.radius,100,100)
                 self.bounces+=1
                 
 
@@ -118,7 +122,7 @@ class Projectile():
 
         
 
-    def __init__(self, x, y,xVelocity,yVelocity,background,screen):
+    def __init__(self, x, y,xVelocity,yVelocity,background,screen,player):
         self.position = pygame.Vector2(x,y)
         self.previousPosition = pygame.Vector2(x,y)
         self.velocity = pygame.Vector2(xVelocity,yVelocity)
@@ -127,4 +131,5 @@ class Projectile():
         self.screen = screen
         self.bounces=0
         self.radius=5
+        self.player = player
     
