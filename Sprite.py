@@ -17,6 +17,8 @@ class Sprite:
         self.background = background
         self.screen = screen
         self.spriteImage =  pygame.image.load(spriteImage)
+        self.startingPosition = Vector(position.x,position.y)
+        self.maxHealth = health
         self.position = position
         self.coordinates = self.calculateCoordinates(self.position.x, self.position.y)
         self.velocity = pygame.Vector2(0,0)
@@ -123,6 +125,11 @@ class Sprite:
         else:
             # render idle animation (with the correct direction that the player was facing)
             animObjs[f'idle_{self.player_facing}'].blit(self.screen, self.playerRectangle.topleft)
+    
+    def resetEntity(self,dt):
+        self.position = Vector(self.startingPosition.x,self.startingPosition.y)
+        self.health = self.maxHealth
+        self.dead = False
 
         
 

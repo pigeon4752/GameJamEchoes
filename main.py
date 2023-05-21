@@ -33,13 +33,12 @@ class main:
             
         
         
-        entityHandler = EntityHandler()
+        entityHandler = EntityHandler(background.entityArray)
         keyHandler = KeyHandler(background.player,background)
         projectileHandler = ProjectileHandler()
         mouseHandler = MouseHandler()
 
-        for entity in background.entityArray:
-            entityHandler.addEntity(entity)
+        
         
         running = True
         while running:
@@ -61,6 +60,8 @@ class main:
             entityHandler.updateEntities(dt) # DRAW ALL HITBOXES
             projectileHandler.update()
             background.updateMap() # Update light
+            if background.player.dead:
+                entityHandler.resetEntities(dt)
 
             pygame.display.flip()
             

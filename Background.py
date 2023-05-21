@@ -108,8 +108,7 @@ class Background:
                     #self.tileArray.append(tileObject)
                     #self.hashMap[tileObject.key] = tileObject
                 elif tileValue == 6:#humans
-                    
-                   
+
                     self.player = Player(self.screen,self,2,x= x*self.tileSize,y = y*self.tileSize)
                     entityArray.append(self.player)
                     
