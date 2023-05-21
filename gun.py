@@ -9,6 +9,7 @@ class Gun:
     height = 5
     angle = 0
     projectile_speed = 10
+    MAX_VELOCITY = 15
 
     def __init__(self, player_rect,screen):
         self.player_rect = player_rect
@@ -18,8 +19,14 @@ class Gun:
         
     def fire_gun(self, angle, click_duration, background, screen):
         # speed is evaluated in proportion to the click_duration
-        yVelocity = (self.projectile_speed*0.8*click_duration) * math.sin(math.radians(angle))
-        xVelocity = (self.projectile_speed*0.8*click_duration) * math.cos(math.radians(angle))
+        yVelocity = ((self.projectile_speed*0.8*click_duration) * math.sin(math.radians(angle)))
+        xVelocity = ((self.projectile_speed*0.8*click_duration) * math.cos(math.radians(angle)))
+        while xVelocity>self.MAX_VELOCITY or xVelocity<0-self.MAX_VELOCITY:
+            xVelocity=xVelocity*0.9
+            yVelocity= yVelocity*0.9
+        while yVelocity>self.MAX_VELOCITY or yVelocity<0-self.MAX_VELOCITY:
+            yVelocity=yVelocity*0.9
+            xVelocity=xVelocity*0.9
         projectile = Projectile(self.player_rect.centerx ,self.player_rect.centery ,xVelocity ,yVelocity, background, screen)
         return projectile
         

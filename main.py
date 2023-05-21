@@ -27,7 +27,7 @@ class main:
     keyHandler = KeyHandler(player1,background)
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
-    #entityHandler.addEntity(gobbo)
+    entityHandler.addEntity(gobbo)
     bg = pygame.image.load("background.png")
 
     projectileHandler = ProjectileHandler()
@@ -44,7 +44,11 @@ class main:
         dt = clock.tick(30)
         dt = dt/40
 
-        angle = mousehandler.mouse_angle(pygame.mouse.get_pos(), player1.position)
+
+
+        # angle = MouseHandler.mouse_angle
+
+        # player1.passAngleToGun(angle)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -53,8 +57,8 @@ class main:
                 mouse_down = True
 
             elif event.type == pygame.MOUSEBUTTONUP:
+                angle = mousehandler.mouse_angle(pygame.mouse.get_pos(), player1.position)
                 click_duration = mousehandler.click_duration()
-                # fire projectile at given angle and click strength
                 player1.fire(angle, click_duration)
                 mouse_down = False
                 
@@ -73,12 +77,11 @@ class main:
         entityHandler.updateEntities(dt) ##DRAW ALL HITBOXES
         projectileHandler.update()
         background.updateMap() ## Add all walls and fog
-        player1.gun.angle = angle
-        player1.gun.update()
-        player1.gun.draw()
        
         
-    
+        
+
+
         # Flip the display
 
         pygame.display.flip()
