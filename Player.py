@@ -3,6 +3,7 @@ from Sprite import Sprite
 from gun import Gun
 from projectileHandler import ProjectileHandler
 from AnimationHandler import AnimationHandler
+from Vector import Vector
 import math
 
 class Player(Sprite):
@@ -72,8 +73,8 @@ class Player(Sprite):
         self.velocity.y-=(direction[1] * intensity)
         return True
 
-    def __init__(self,screen,background,moveSpeed,rendered = True):
-        super().__init__(screen,background,rendered=rendered)
+    def __init__(self,screen,background,moveSpeed,x = 400,y = 400,rendered = True):
+        super().__init__(screen,background,Vector(x,y),rendered=rendered)
         self.moveSpeed = moveSpeed
         self.gun = Gun(self,screen)
         self.projectileHandler = ProjectileHandler()
