@@ -9,6 +9,7 @@ import math
 class Player(Sprite):
     moveSpeed = 1.5
     gravity = 1.5
+    dead = False
 
     def update(self,dt):
         self.changeYVelocity(self.gravity*dt)
@@ -32,6 +33,8 @@ class Player(Sprite):
         if self.dead:
             pygame.mixer.Sound("giggle.mp3").play()
             ##Play dead noises
+    def checkDead(self):
+        return self.dead
 
     def updateSprite(self):
         self.AnimationHandler.moveConductor.play()
