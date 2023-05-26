@@ -20,7 +20,7 @@ class Player(Sprite):
         
         # self.updatePosition()
         super().update(dt)
-        self.background.addLight(self.position.x-20,self.position.y,50,10)
+        self.background.addLight((self.position.x+(self.width/2)+3),(self.position.y+(self.height/2)+3),50,10)
 
     def passAngleToGun(self,angle):
         self.gun.setAngle(angle)

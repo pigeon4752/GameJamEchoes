@@ -8,7 +8,7 @@ class tile:
         self.rect = rect
         self.shadow = 0
         if glows:
-            self.shadow = 255
+            self.shadow = 100
         self.x = x
         self.y = y
         self.key = self.calculateKey(x,y)

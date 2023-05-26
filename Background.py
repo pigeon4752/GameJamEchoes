@@ -17,13 +17,16 @@ class Background:
         self.screenWidth = SCREEN_WIDTH
         self.hashMap = {}
         self.entityArray  = self.createNewBackground()
+
+        self.lightDebug = False # SET FOR SHOWING LIGHT SOURCES
         
 
     
     def addLight(self, x, y, size, intensity):
         radius = size / 2
-        center = (x + radius, y + radius)
-        
+        center = (x , y)
+        if(self.lightDebug):
+            pygame.draw.circle(self.screen,"yellow",center,radius)
         # Iterate over the array of tiles
         for tile in self.tileArray:
             # Get the center of the tile's rect
@@ -93,7 +96,7 @@ class Background:
                     #tileObject = tile(image,tileRect,255,x,y,damaging =True,damageRate=100)
                 elif tileValue == 3:#Lava
                     image = pygame.image.load("lava.png")
-                    tileObject = tile(image,tileRect,255,x,y,damaging =True,damageRate=100)
+                    tileObject = tile(image,tileRect,255,x,y,damaging =True,damageRate=100,glows=True)
                     self.tileArray.append(tileObject)
                     self.hashMap[tileObject.key] = tileObject
                 elif tileValue == 4:##Goblin pit 
@@ -139,11 +142,11 @@ class Background:
        
     
     def updateMap(self):
-        for tileObject in self.tileArray: 
+        for tileObject in self.tileArray:
+            tileObject.image.set_alpha(tileObject.shadow) 
             self.decreaseTileBrightness(tileObject,2)
             if tileObject.glows:
-                self.addLight(tileObject.x, tileObject.y, 50, 50)
-            tileObject.image.set_alpha(tileObject.shadow)
+                self.addLight((tileObject.rect.x+(tileObject.rect.width/2)), (tileObject.rect.y+(tileObject.rect.height/2)), 60, (-3+random.randint(0,8)))
             if (tileObject.shadow!=0):
                 self.screen.blit(tileObject.image, tileObject.rect.topleft)
 

@@ -29,6 +29,8 @@ class Sprite:
         self.health = health
         self.dead = False
         self.player_facing = 'right'
+        self.width = width
+        self.height = width
         # self.gun = Gun(self.playerRectangle)
 
     def updatePosition(self,dt):
