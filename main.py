@@ -41,6 +41,7 @@ class main:
     pygame.mixer.Sound("munch.mp3").play()
     storyImage = pygame.image.load(os.path.join("story0.png"))
     pressCount = 0
+    running = True
     TOTAL_STORY_FRAMES = 3
     while story:
         dt = clock.tick(60)
@@ -99,7 +100,6 @@ class main:
 
     playerDead = False
     mouse_down = False
-    running = True
     while running:
         # MAIN GAME LOOP
         dt = clock.tick(60)
