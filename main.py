@@ -36,7 +36,7 @@ class main:
         pygame.mixer.music.set_endevent(pygame.USEREVENT+1)
         pygame.mixer.music.play()
 
-    story = False # SET TO FALSE FOR NO STORY
+    story = True # SET TO FALSE FOR NO STORY
     playMusic("IntroSong.mp3")
     pygame.mixer.Sound("munch.mp3").play()
     storyImage = pygame.image.load(os.path.join("story0.png"))
