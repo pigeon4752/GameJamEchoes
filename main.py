@@ -79,13 +79,13 @@ class main:
     
     background = Background(screen,SCREEN_WIDTH,SCREEN_HEIGHT)
 
-    #Pgobbo = Goblin(screen,background)
+    # gobbo = Goblin(screen,background)
     
     player1 = Player(screen,background,5)
     keyHandler = KeyHandler(player1,background)
     entityHandler = EntityHandler()
     entityHandler.addEntity(player1)
-    #entityHandler.addEntity(gobbo)
+    # entityHandler.addEntity(gobbo)
     
     #bg = pygame.image.load("background.png")
 
@@ -97,7 +97,7 @@ class main:
 
     mousehandler = MouseHandler()
 
-
+    playerDead = False
     mouse_down = False
     running = True
     while running:
@@ -126,19 +126,21 @@ class main:
         entityHandler.updateEntities(dt) # DRAW ALL HITBOXES
         projectileHandler.update()
         background.updateMap() # Update light
-        running = not player1.checkDead()
-
+        if player1.checkDead():
+            playerDead = True
+            running = False
         pygame.display.flip()
     storyImage = pygame.transform.scale(pygame.image.load(os.path.join("gameOver.png")),(768,768))
-    end=255
-    while end > 0:
-        pygame.Surface.fill(screen,(0,0,0))
-        screen.blit(storyImage,(0,0))
-        storyImage.set_alpha(end)
-        pygame.display.flip()
-        end-=1
-        if end<0:
-            end=0       
+    if (playerDead == True):
+        end=255
+        while end > 0:
+            pygame.Surface.fill(screen,(0,0,0))
+            screen.blit(storyImage,(0,0))
+            storyImage.set_alpha(end)
+            pygame.display.flip()
+            end-=1
+            if end<0:
+                end=0       
         
 
 
