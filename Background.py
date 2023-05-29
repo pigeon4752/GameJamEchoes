@@ -168,6 +168,9 @@ class Background:
     def getTile(self,x,y):
         return(self.hashMap[x,"_",y])
 
+    def addEntitie(self,player):
+        self.entityArray.append(player)
+
     def getTilesAround(self,position):
         arr = []
         

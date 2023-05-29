@@ -8,16 +8,19 @@ from EntityHandler import EntityHandler
 from Background import Background
 from projectiles import Projectile
 from projectileHandler import ProjectileHandler
+from multiplayer import Multiplayer
+import time
 import os
 
 class main:
     
-    def __init__(self):
+    def __init__(self,story = False,multiplayer = True):
 
 
         pygame.init()
         SCREEN_WIDTH = 768
         SCREEN_HEIGHT = 768
+        
         
         self.screen = pygame.display.set_mode([SCREEN_HEIGHT, SCREEN_WIDTH])
         
@@ -29,7 +32,11 @@ class main:
         self.story(pygame.time.Clock(),story=False)
         clock = pygame.time.Clock()
         background = Background(self.screen,SCREEN_WIDTH,SCREEN_HEIGHT)
- 
+        
+        if multiplayer:
+            
+            secondPlayer = self.instantiateMultiplayer(background.player)
+
             
         
         
@@ -61,8 +68,6 @@ class main:
             projectileHandler.update()
             background.updateMap() # Update light
 
-            if 770<background.player.position.y<780:
-                print("pi")
             if background.player.dead:
                 entityHandler.resetEntities(dt)
 
@@ -72,6 +77,17 @@ class main:
 
         # Done! Time to quit.
         pygame.quit()
+
+
+    def instantiateMultiplayer(self,player):
+        self.multiplayer = Multiplayer(player)
+        loaded = False
+        while not loaded:
+            loaded,opponent = self.multiplayer.getOtherPlayer()
+            time.sleep(0.2)
+        return(opponent)
+            
+
 
     def story(self,clock,story = False):
         SONG_END = pygame.USEREVENT+1
