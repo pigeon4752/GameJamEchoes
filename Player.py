@@ -84,3 +84,6 @@ class Player(Sprite):
         self.AnimationHandler = AnimationHandler("Oldman.png", 2, 4, ['idle_right', 'walk_right'])
         
         
+
+
+

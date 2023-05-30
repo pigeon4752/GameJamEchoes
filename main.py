@@ -31,17 +31,20 @@ class main:
         
         self.story(pygame.time.Clock(),story=False)
         clock = pygame.time.Clock()
-        background = Background(self.screen,SCREEN_WIDTH,SCREEN_HEIGHT)
-        
+        self.background = Background(self.screen,SCREEN_WIDTH,SCREEN_HEIGHT)
+        multiplayerValid = False
         if multiplayer:
             
-            secondPlayer = self.instantiateMultiplayer(background.player)
+            secondPlayer = self.instantiateMultiplayer(self.background.player)
+            if secondPlayer != None:
+                self.background.addEntity(secondPlayer)
+                multiplayerValid = True
 
             
         
         
-        entityHandler = EntityHandler(background.entityArray)
-        keyHandler = KeyHandler(background.player,background)
+        entityHandler = EntityHandler(self.background.entityArray)
+        keyHandler = KeyHandler(self.background.player,self.background)
         projectileHandler = ProjectileHandler()
         mouseHandler = MouseHandler()
 
@@ -53,7 +56,7 @@ class main:
             dt = clock.tick(60)
             dt = dt/40
             for event in pygame.event.get():
-                mouseHandler.handleClicks(event,background.player)
+                mouseHandler.handleClicks(event,self.background.player)
                 if event.type == pygame.QUIT:
                     running = False
                 
@@ -66,9 +69,10 @@ class main:
             self.screen.fill((0, 0, 0))
             entityHandler.updateEntities(dt) # DRAW ALL HITBOXES
             projectileHandler.update()
-            background.updateMap() # Update light
-
-            if background.player.dead:
+            self.background.updateMap() # Update light
+            if multiplayerValid:
+                self.multiplayer.updateOpponent(self.background.player, secondPlayer)
+            if self.background.player.dead:
                 entityHandler.resetEntities(dt)
 
             pygame.display.flip()
@@ -77,15 +81,22 @@ class main:
 
         # Done! Time to quit.
         pygame.quit()
+        self.multiplayer.wipe()
 
 
     def instantiateMultiplayer(self,player):
+
         self.multiplayer = Multiplayer(player)
-        loaded = False
-        while not loaded:
-            loaded,opponent = self.multiplayer.getOtherPlayer()
-            time.sleep(0.2)
-        return(opponent)
+        if self.multiplayer.valid:
+            loaded = False
+            while not loaded:
+                loaded,opponent = self.multiplayer.getOtherPlayer()
+
+                time.sleep(0.2)
+            
+            return(Player(self.screen,self.background,2,x=opponent["xPos"],y=opponent["yPos"]))
+        else:
+            return(None)
             
 
 
