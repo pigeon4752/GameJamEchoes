@@ -1,7 +1,7 @@
 import pygame
 import os
 import math
-from projectiles import Projectile
+from .projectiles import Projectile
 
 class Gun:
     # height and width attributes
@@ -15,7 +15,7 @@ class Gun:
         self.player = player
         self.player_rect = player.playerRectangle
         self.screen = screen
-        self.gunImage = pygame.transform.scale((pygame.image.load(os.path.join('SonarGun.png'))), (self.width, self.height))
+        self.gunImage = pygame.transform.scale((pygame.image.load(os.path.join('Entities/images/SonarGun.png'))), (self.width, self.height))
         # self.gunImage = pygame.transform.scale(self.gunImage, (10, 5))
         
     def fire_gun(self, angle, click_duration, background, screen):

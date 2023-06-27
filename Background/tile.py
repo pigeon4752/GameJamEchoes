@@ -1,4 +1,4 @@
-class tile:
+class Tile:
 
     
     

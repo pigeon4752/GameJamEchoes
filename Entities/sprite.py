@@ -1,8 +1,8 @@
 import pygame
-import Background as background
+#from Background import Background
 import math
 
-from gun import Gun 
+from .gun import Gun 
 from Vector import Vector
 
 class Sprite:
@@ -13,7 +13,7 @@ class Sprite:
     MAX_X_VELOCITY = 8
     
     gravity = 1
-    def __init__(self,screen,background,position,width=24,size= 24,colour="red",spriteImage = "player.png",rendered = False,health = 100):
+    def __init__(self,screen,background,position,width=24,size= 24,colour="red",spriteImage = "Entities/images/player.png",rendered = False,health = 100):
         self.background = background
         self.screen = screen
         self.spriteImage =  pygame.image.load(spriteImage)

@@ -1,13 +1,8 @@
 import pygame
-from mouseHandler import MouseHandler
-import Background as Background
-from Goblin import Goblin
-from Player import Player
-from keyHandler import KeyHandler
-from EntityHandler import EntityHandler
+from Handlers import keyHandler, mouseHandler, entityHandler,projectileHandler
 from Background import Background
-from projectiles import Projectile
-from projectileHandler import ProjectileHandler
+from Entities import *
+
 import os
 
 class main:
@@ -22,7 +17,7 @@ class main:
         self.screen = pygame.display.set_mode([SCREEN_HEIGHT, SCREEN_WIDTH])
         
         pygame.display.set_caption("Mine Goblin")
-        icon_image = pygame.image.load("jumboBroadclothIcon.png")
+        icon_image = pygame.image.load("images/jumboBroadclothIcon.png")
         pygame.display.set_icon(icon_image)
         
         
@@ -33,10 +28,10 @@ class main:
             
         
         
-        entityHandler = EntityHandler(background.entityArray)
-        keyHandler = KeyHandler(background.player,background)
-        projectileHandler = ProjectileHandler()
-        mouseHandler = MouseHandler()
+        entity_handler = entityHandler.EntityHandler(background.entityArray)
+        key_handler = keyHandler.KeyHandler(background.player,background)
+        projectile_handler = projectileHandler.ProjectileHandler()
+        mouse_handler = mouseHandler.MouseHandler()
 
         
         
@@ -46,7 +41,7 @@ class main:
             dt = clock.tick(60)
             dt = dt/40
             for event in pygame.event.get():
-                mouseHandler.handleClicks(event,background.player)
+                mouse_handler.handleClicks(event,background.player)
                 if event.type == pygame.QUIT:
                     running = False
                 
@@ -55,16 +50,14 @@ class main:
                       
             # Get state of all keys
             keys = pygame.key.get_pressed()
-            keyHandler.handleKeys(keys,dt)
+            key_handler.handleKeys(keys,dt)
             self.screen.fill((0, 0, 0))
-            entityHandler.updateEntities(dt) # DRAW ALL HITBOXES
-            projectileHandler.update()
+            entity_handler.updateEntities(dt) # DRAW ALL HITBOXES
+            projectile_handler.update()
             background.updateMap() # Update light
 
-            if 770<background.player.position.y<780:
-                print("pi")
             if background.player.dead:
-                entityHandler.resetEntities(dt)
+                entity_handler.resetEntities(dt)
 
             pygame.display.flip()
             
@@ -86,9 +79,9 @@ class main:
             pygame.mixer.music.play()
 
         #story = False # SET TO FALSE FOR NO STORY
-        playMusic("IntroSong.mp3")
-        pygame.mixer.Sound("munch.mp3").play()
-        storyImage = pygame.image.load(os.path.join("story0.png"))
+        playMusic("audio/IntroSong.mp3")
+        pygame.mixer.Sound("audio/munch.mp3").play()
+        storyImage = pygame.image.load(os.path.join("images/story0.png"))
         pressCount = 0
         TOTAL_STORY_FRAMES = 3
         while story:
@@ -99,7 +92,7 @@ class main:
                 if event.type == SONG_END:
                     print("song over")
                     pygame.mixer.music.unload()
-                    playMusic("IntroSong.mp3")     
+                    playMusic("audio/IntroSong.mp3")     
                 if event.type == pygame.QUIT:
                     story=False
                     running = False
@@ -117,7 +110,7 @@ class main:
                             end=0               
                     if pressCount >=TOTAL_STORY_FRAMES-1:
                         story = False
-                        pygame.mixer.Sound("im_coming_to_get_you.mp3").play()
+                        pygame.mixer.Sound("audio/im_coming_to_get_you.mp3").play()
                     else:
                         pressCount+=1
                         storyImage = pygame.image.load(os.path.join("story" + str(pressCount) + ".png"))

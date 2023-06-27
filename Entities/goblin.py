@@ -1,4 +1,4 @@
-from Bot import Bot
+from bot import Bot
 from gun import Gun
 import random
 from Vector import Vector

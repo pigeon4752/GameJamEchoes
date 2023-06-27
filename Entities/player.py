@@ -1,8 +1,9 @@
 import pygame
-from Sprite import Sprite
-from gun import Gun
-from projectileHandler import ProjectileHandler
-from AnimationHandler import AnimationHandler
+from .sprite import Sprite
+from .gun import Gun
+
+from Handlers.projectileHandler import ProjectileHandler
+from Handlers.animationHandler import AnimationHandler
 from Vector import Vector
 import math
 
@@ -28,10 +29,10 @@ class Player(Sprite):
 
     def takeDamage(self, damage):
         ###Play sound
-        pygame.mixer.Sound("ow.mp3").play()
+        pygame.mixer.Sound("Entities/audio/ow.mp3").play()
         super().takeDamage(damage)
         if self.dead:
-            pygame.mixer.Sound("giggle.mp3").play()
+            pygame.mixer.Sound("audio/giggle.mp3").play()
             ##Play dead noises
     def checkDead(self):
         return self.dead
@@ -81,6 +82,6 @@ class Player(Sprite):
         self.moveSpeed = moveSpeed
         self.gun = Gun(self,screen)
         self.projectileHandler = ProjectileHandler()
-        self.AnimationHandler = AnimationHandler("Oldman.png", 2, 4, ['idle_right', 'walk_right'])
+        self.AnimationHandler = AnimationHandler("Entities/images/Oldman.png", 2, 4, ['idle_right', 'walk_right'])
         
         

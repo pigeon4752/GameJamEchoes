@@ -1,11 +1,12 @@
 import pygame
 import numpy as np
-from Tile import tile
+from .tile import Tile
 from PIL import Image
 import math
 import time
 import random
-from Player import Player
+import os
+from Entities.player import Player
 
 class Background:
     
@@ -52,7 +53,8 @@ class Background:
         #rectangle = pygame.Rect(100, self.screen.get_height() - 100, self.screen.get_width()-200, 100)
         #img = Image.open('file.bmp')
         #flipped_vertical = np.flip(arr, axis=0)
-        self.map = np.flip(np.rot90((np.array(Image.open('mapColour.bmp')))),axis = 0)
+        print(os.getcwd()+"\n")
+        self.map = np.flip(np.rot90((np.array(Image.open("Background/maps/mapColour.bmp")))),axis = 0)
         
         self.dimension = int(math.sqrt(self.map.size))
         
@@ -74,16 +76,16 @@ class Background:
                     
                    
                     if(randomNum<=60):
-                        image = pygame.image.load("cobble.png")
+                        image = pygame.image.load("Background/images/cobble.png")
                     elif(randomNum<=79):
-                        image = pygame.image.load("cobble.png")
+                        image = pygame.image.load("Background/images/cobble.png")
                     elif(randomNum<=83):
-                        image = pygame.image.load("cobble.png")
+                        image = pygame.image.load("Background/images/cobble.png")
                     elif(randomNum<=88):
-                        image = pygame.image.load("cobble.png")
+                        image = pygame.image.load("Background/images/cobble.png")
                     else:
-                        image = pygame.image.load("cobble.png")
-                    tileObject = tile(image,tileRect,255,x,y)
+                        image = pygame.image.load("Background/images/cobble.png")
+                    tileObject = Tile(image,tileRect,255,x,y)
                     self.tileArray.append(tileObject)
                     self.hashMap[tileObject.key] = tileObject
                     
@@ -95,13 +97,13 @@ class Background:
                     #image = pygame.image.load("lava.png")
                     #tileObject = tile(image,tileRect,255,x,y,damaging =True,damageRate=100)
                 elif tileValue == 3:#Lava
-                    image = pygame.image.load("lava.png")
-                    tileObject = tile(image,tileRect,255,x,y,damaging =True,damageRate=100,glows=True)
+                    image = pygame.image.load("Background/images/lava.png")
+                    tileObject = Tile(image,tileRect,255,x,y,damaging =True,damageRate=100,glows=True)
                     self.tileArray.append(tileObject)
                     self.hashMap[tileObject.key] = tileObject
                 elif tileValue == 4:##Goblin pit 
-                    image = pygame.image.load("goblinPit.png")
-                    tileObject = tile(image,tileRect,255,x,y,damaging =True,damageRate=100)
+                    image = pygame.image.load("Background/images/goblinPit.png")
+                    tileObject = Tile(image,tileRect,255,x,y,damaging =True,damageRate=100)
                     self.tileArray.append(tileObject)
                     self.hashMap[tileObject.key] = tileObject
                 elif tileValue == 5:#Goblins
