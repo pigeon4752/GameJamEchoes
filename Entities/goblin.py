@@ -2,7 +2,7 @@ from bot import Bot
 from gun import Gun
 import random
 from Vector import Vector
-from Node import Node
+from node import Node
 import numpy as np
 import math
 import threading

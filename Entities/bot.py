@@ -1,4 +1,4 @@
-from Sprite import Sprite
+from sprite import Sprite
 import threading
 class Bot(Sprite):
     
